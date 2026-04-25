@@ -1,0 +1,99 @@
+{
+  "categories": [
+    {
+      "id": "photography",
+      "label": "📷 摄影&写实",
+      "labelEn": "Photography"
+    },
+    {
+      "id": "portrait",
+      "label": "👤 人像自拍",
+      "labelEn": "Portrait"
+    },
+    {
+      "id": "poster",
+      "label": "📰 海报排版",
+      "labelEn": "Poster & Typography"
+    },
+    {
+      "id": "ui",
+      "label": "📱 UI界面",
+      "labelEn": "UI & Social Media"
+    },
+    {
+      "id": "character",
+      "label": "🎭 角色设计",
+      "labelEn": "Character Design"
+    },
+    {
+      "id": "gaming",
+      "label": "🎮 游戏娱乐",
+      "labelEn": "Gaming"
+    },
+    {
+      "id": "food",
+      "label": "🍜 美食餐饮",
+      "labelEn": "Food & Drink"
+    },
+    {
+      "id": "3d",
+      "label": "🧊 3D渲染",
+      "labelEn": "3D Render"
+    },
+    {
+      "id": "fashion",
+      "label": "👗 时尚穿搭",
+      "labelEn": "Fashion"
+    },
+    {
+      "id": "logo",
+      "label": "🎯 品牌标识",
+      "labelEn": "Logo & Branding"
+    },
+    {
+      "id": "infographic",
+      "label": "📊 信息图表",
+      "labelEn": "Infographic"
+    },
+    {
+      "id": "paper-craft",
+      "label": "✂️ 纸艺手工",
+      "labelEn": "Paper Craft"
+    },
+    {
+      "id": "landscape",
+      "label": "🏔️ 风景自然",
+      "labelEn": "Landscape"
+    },
+    {
+      "id": "minimalist",
+      "label": "◽ 极简风格",
+      "labelEn": "Minimalist"
+    },
+    {
+      "id": "futuristic",
+      "label": "🚀 未来科技",
+      "labelEn": "Futuristic"
+    },
+    {
+      "id": "comparison",
+      "label": "⚡ 模型对比",
+      "labelEn": "Model Comparison"
+    },
+    {
+      "id": "video",
+      "label": "🎬 视频动画",
+      "labelEn": "Video & Animation"
+    },
+    {
+      "id": "editing",
+      "label": "🖼️ 图像编辑",
+      "labelEn": "Image Editing"
+    },
+    {
+      "id": "interior",
+      "label": "🏠 室内设计",
+      "labelEn": "Interior Design"
+    }
+  ]
+}
