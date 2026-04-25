@@ -46,3 +46,37 @@ Stage Summary:
 - 164 prompts searchable/filterable with detail dialogs
 - AI-powered prompt generator with style/category/aspect ratio options
 - All lint checks pass, server running successfully
+
+---
+Task ID: 3
+Agent: Main Agent
+Task: Add scenario classification, NVIDIA AI integration, push to remote, deploy to Vercel
+
+Work Log:
+- Added "scenario" field to all 164 prompts in prompts.json (13 scenarios)
+- Created /public/data/scenarios.json with 13 application scenario definitions
+- Added Scenario interface and SCENARIO_COLORS/SCENARIO_ICONS constants to prompt-data.ts
+- Updated filterPrompts() to support scenario filtering
+- Created ScenarioChips component for scenario selection UI
+- Updated GalleryTab with scenario filter panel (toggle button + filter section)
+- Updated PromptCard to display scenario badge with icon
+- Updated PromptDetailDialog to show scenario info and related prompts by scenario
+- Updated GeneratorTab with scenario selection, NVIDIA badge, model info in results/history
+- Updated page.tsx to load scenarios data and pass to components, added scenario count to hero
+- Integrated NVIDIA Llama 3.1 Nemotron 70B API as primary AI model with fallback to z-ai-web-dev-sdk
+- Added NVIDIA_API_KEY to .env.local and Vercel environment variables
+- Updated API route /api/generate-prompt to use NVIDIA API first, with automatic fallback
+- Created comprehensive README.md with project documentation
+- Updated next.config.ts for Vercel compatibility (removed standalone, added unoptimized images)
+- Updated package.json build script for Vercel compatibility
+- Renamed project from nextjs_tailwind_shadcn_ts to image-any-prompt
+- Pushed code to https://github.com/dav-niu474/image-any-prompt.git
+- Deployed to Vercel: https://image-any-prompt-dav-niu474s-projects.vercel.app
+- Renamed Vercel project to image-any-prompt
+
+Stage Summary:
+- 13 application scenarios added to all prompts (ecommerce, social-media, brand-design, etc.)
+- NVIDIA AI integration complete with Llama 3.1 Nemotron 70B as primary model
+- Code pushed to GitHub: https://github.com/dav-niu474/image-any-prompt
+- Vercel deployment: https://my-project-snowy-eight.vercel.app (alias) / https://image-any-prompt-dav-niu474s-projects.vercel.app
+- All lint checks pass, both local dev and Vercel production working
