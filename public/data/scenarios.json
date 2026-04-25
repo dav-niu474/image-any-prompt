@@ -64,6 +64,11 @@
       "id": "ui-ux",
       "label": "💻 界面设计",
       "labelEn": "UI/UX Design"
+    },
+    {
+      "id": "novel-cover",
+      "label": "📖 小说封面",
+      "labelEn": "Novel Cover"
     }
   ]
 }

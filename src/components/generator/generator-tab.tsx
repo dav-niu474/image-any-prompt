@@ -142,7 +142,7 @@ export function GeneratorTab({ categories, scenarios }: GeneratorTabProps) {
       <div className="flex items-center gap-2 p-3 bg-gradient-to-r from-green-500/10 via-emerald-500/5 to-teal-500/10 border border-emerald-500/20 rounded-lg">
         <Cpu className="size-4 text-emerald-400" />
         <span className="text-xs text-emerald-400 font-medium">AI 由 NVIDIA 加速驱动</span>
-        <span className="text-[10px] text-slate-500">· Llama 3.1 Nemotron 70B</span>
+        <span className="text-[10px] text-slate-500">· Llama 3.3 70B Instruct</span>
       </div>
 
       {/* Subject Input */}

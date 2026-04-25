@@ -2111,5 +2111,278 @@
     "source": "awesome-gpt-image-2",
     "imageUrl": "https://cms-assets.youmind.com/media/1777022546534_tu22yn_HGp9pvAagAAWa3u.jpg",
     "scenario": "social-media"
+  },
+  {
+    "id": "novel-1",
+    "title": "玄幻小说封面 · 修仙者凌空而立",
+    "category": "poster",
+    "tags": [
+      "poster",
+      "futuristic",
+      "character"
+    ],
+    "prompt": "A vertical 2:3 book cover design for a Chinese fantasy (xianxia) novel. A lone cultivator figure in flowing white and gold robes stands mid-air above a sea of clouds, hair and robes billowing in divine wind. Behind them, a massive ancient floating sect palace with jade pillars and golden roofs emerges from mist, connected by rainbow bridges. Divine golden light rays break through the clouds from above, illuminating the figure. A colossal mythical Azure Dragon coils through the clouds in the background, its scales shimmering with iridescent blue-green light. The figure holds a glowing golden sword emitting particles of light. Color palette: deep celestial blue, imperial gold, jade green, crimson accents, pearl white. Leave the top 20% as dark gradient negative space for the novel title in bold calligraphic Chinese font, and the bottom 10% for the author name. Dramatic volumetric lighting, epic cinematic composition, Chinese fantasy art style, ultra-detailed, 8K. Suitable for Qidian (起点中文网) platform cover display at thumbnail size.",
+    "source": "novel-cover",
+    "imageUrl": "",
+    "scenario": "novel-cover"
+  },
+  {
+    "id": "novel-2",
+    "title": "言情小说封面 · 古风温婉女子",
+    "category": "portrait",
+    "tags": [
+      "portrait",
+      "fashion"
+    ],
+    "prompt": "A vertical 3:4 book cover design for a Chinese historical romance (古言) novel. A beautiful young Chinese woman in an elegant Tang Dynasty hanfu dress with layered silk in soft pink, cream, and pale gold, adorned with delicate hairpins and jade earrings. She stands beneath a blooming cherry blossom tree, petals gently falling around her. Her expression is tender and slightly melancholic, with a silk fan half-covering her face. Background: a misty traditional Chinese garden with a curved bridge over a lotus pond, willow trees, and a distant pavilion. Soft warm golden-hour lighting with bokeh light leaks and dreamy soft-focus effect. Color palette: soft rose pink, warm cream, pale gold, misty jade green, lavender. Leave the top 25% as a soft gradient for the novel title in elegant flowing Chinese calligraphy, and bottom 8% for the author name. Dreamy romantic aesthetic, suitable for Jinjiang (晋江) platform cover, shallow depth of field, painterly quality, ultra-detailed silk textures, 8K.",
+    "source": "novel-cover",
+    "imageUrl": "",
+    "scenario": "novel-cover"
+  },
+  {
+    "id": "novel-3",
+    "title": "都市小说封面 · 商业精英剪影",
+    "category": "poster",
+    "tags": [
+      "poster",
+      "photography"
+    ],
+    "prompt": "A vertical 2:3 book cover design for a Chinese urban/business (都市商战) novel. A sharp silhouette of a man in a tailored dark charcoal suit standing at the floor-to-ceiling window of a high-rise penthouse office, looking out over a glittering modern city skyline at twilight. The city lights create warm amber and cool cyan bokeh through the glass. His reflection is visible in the window glass. One hand in pocket, confident posture. In the foreground, a half-empty whiskey glass on a marble desk with scattered documents. Background: ultra-modern Shanghai-style metropolis with skyscrapers, neon signs, and a river reflecting city lights. Color palette: deep navy, warm amber, steel grey, burgundy accent, cream highlights. Leave the top 18% as dark negative space for the bold sans-serif Chinese title, and bottom 8% for the author name. Cinematic editorial photography style, dramatic rim lighting, high contrast, suitable for Fanqie (番茄小说) platform cover, sharp focus, film grain, 8K.",
+    "source": "novel-cover",
+    "imageUrl": "",
+    "scenario": "novel-cover"
+  },
+  {
+    "id": "novel-4",
+    "title": "科幻小说封面 · 太空战舰与星云",
+    "category": "futuristic",
+    "tags": [
+      "futuristic",
+      "3d"
+    ],
+    "prompt": "A vertical 2:3 book cover design for a science fiction novel. A massive sleek battleship with angular dark hull and glowing blue engine thrusters flies through a vibrant nebula in deep space. The nebula fills the background with swirling colors of electric purple, neon cyan, and warm orange. Smaller fighter craft trail behind the mothership in formation, leaving blue engine trails. A planet with rings is visible in the lower left corner, partially illuminated by a distant star. Holographic UI elements and star charts are subtly overlaid in the foreground with slight transparency. Color palette: deep space black, neon cyan, electric purple, metallic silver, warm orange nebula glow. Leave the top 22% as dark space for the title in bold futuristic sans-serif font with subtle glow effect, and bottom 8% for author name. Cinematic sci-fi composition, volumetric nebula lighting, lens flares, holographic effects, ultra-detailed spacecraft, 8K.",
+    "source": "novel-cover",
+    "imageUrl": "",
+    "scenario": "novel-cover"
+  },
+  {
+    "id": "novel-5",
+    "title": "悬疑小说封面 · 雨夜暗巷",
+    "category": "photography",
+    "tags": [
+      "photography",
+      "minimalist"
+    ],
+    "prompt": "A vertical 2:3 book cover design for a mystery/suspense (悬疑推理) novel. A dark, moody scene of a narrow rain-soaked alley at night, shot from a low angle looking up. A solitary figure in a dark trench coat and hat stands at the far end of the alley, partially obscured by rain and shadow, their face completely hidden. A single warm amber streetlight creates a dramatic pool of light in the middle of the wet cobblestone ground, with rain ripples visible. The alley walls are old brick with peeling posters and a single red neon Chinese sign reading '酒吧' on the right wall, casting a crimson glow. Dense fog at the far end of the alley. Rain streaks are visible throughout the scene. Color palette: near-black charcoal, dark navy, warm amber single light source, crimson red neon accent, muted gold reflections on wet ground. Leave the top 20% as pure black for the title in stark white condensed serif Chinese font, and bottom 8% for author name. Noir photography style, extreme high contrast, film grain, suitable for mystery novel cover on all platforms, 8K.",
+    "source": "novel-cover",
+    "imageUrl": "",
+    "scenario": "novel-cover"
+  },
+  {
+    "id": "novel-6",
+    "title": "系统流小说封面 · 全息游戏界面",
+    "category": "ui",
+    "tags": [
+      "ui",
+      "futuristic",
+      "gaming"
+    ],
+    "prompt": "A vertical 2:3 book cover design for a LitRPG/system (系统流) web novel. The central visual is a dramatic scene of a young man in modern casual clothes reaching out to touch a glowing holographic system panel floating in mid-air before him. The panel displays a semi-transparent game-like interface with stat bars, skill icons, and a glowing 'LEVEL UP' notification. Behind him, a real-world urban street scene is blurred and dimmed, contrasting with the vibrant neon interface. Golden particles and data streams flow from the panel into his hand. His eyes glow with subtle blue light reflecting the interface. Color palette: deep dark background, neon cyan interface, golden particle effects, electric blue glow, warm skin tones. Leave the top 22% as dark gradient for the title in bold gaming-style Chinese font with subtle glow, and bottom 8% for author name. Cyberpunk-lit aesthetic, holographic UI design, shallow depth of field, cinematic lighting, suitable for Qidian/Fanqie platform cover, 8K.",
+    "source": "novel-cover",
+    "imageUrl": "",
+    "scenario": "novel-cover"
+  },
+  {
+    "id": "novel-7",
+    "title": "仙侠小说封面 · 御剑飞行",
+    "category": "character",
+    "tags": [
+      "character",
+      "futuristic",
+      "landscape"
+    ],
+    "prompt": "A vertical 2:3 book cover for an immortal hero (仙侠) novel. A dynamic scene of a male cultivator riding a glowing spiritual sword through the clouds at high speed, seen from a dramatic low-angle perspective. He wears elegant dark azure robes with silver embroidery depicting cloud patterns, long black hair streaming behind him in the wind. His left hand forms a sword seal gesture, and a trail of luminous blue-silver energy follows the sword's path. Below, a vast mountain range with terraced rice fields, ancient pagodas perched on peaks, and a winding river cutting through the valley. Above, a spectacular celestial phenomenon of two colliding galaxies in the night sky, casting an ethereal purple and gold glow. Color palette: deep azure blue, silver, celestial gold, emerald green mountains, ethereal purple sky. Leave the top 15% for the novel title in bold brush-stroke Chinese calligraphy, and bottom 8% for author name. Epic Chinese fantasy art, dynamic motion blur, dramatic uplight, hyper-detailed, 8K.",
+    "source": "novel-cover",
+    "imageUrl": "",
+    "scenario": "novel-cover"
+  },
+  {
+    "id": "novel-8",
+    "title": "现代言情封面 · 咖啡馆邂逅",
+    "category": "portrait",
+    "tags": [
+      "portrait",
+      "photography"
+    ],
+    "prompt": "A vertical 3:4 book cover for a modern romance (现言) novel. A warm, intimate close-up scene in a cozy café: a young woman with long black hair and a cream knit sweater sits by a rain-streaked window, holding a latte with latte art. She looks up with a gentle, surprised smile at someone approaching from outside the frame. Soft afternoon light filters through the window, creating warm golden bokeh circles. The window glass has rain droplets with tiny reflections. On the table: an open book, a small vase with a single white rose. Background: blurred café interior with warm pendant lights and bookshelves. Color palette: warm cream, soft caramel, gentle gold, rain-cool grey, blush pink accent. Leave the top 22% as a warm gradient for the title in elegant thin serif Chinese font, and bottom 8% for the author name. Soft romantic editorial photography, shallow depth of field, dreamy warm tones, suitable for Jinjiang (晋江) platform, 8K.",
+    "source": "novel-cover",
+    "imageUrl": "",
+    "scenario": "novel-cover"
+  },
+  {
+    "id": "novel-9",
+    "title": "末世小说封面 · 废墟城市",
+    "category": "landscape",
+    "tags": [
+      "landscape",
+      "futuristic",
+      "photography"
+    ],
+    "prompt": "A vertical 2:3 book cover for a post-apocalyptic (末世) novel. A dramatic wide shot of a ruined modern city overgrown with vegetation. Crumbling skyscrapers with shattered glass windows are wrapped in thick vines and climbing plants. A massive tree has grown through the center of a collapsed highway overpass. In the foreground, a lone survivor in weathered tactical gear stands on a rusted car roof, looking out over the devastated cityscape. They carry a worn backpack and hold a makeshift weapon. Flocks of birds circle in the hazy golden sky where the sun breaks through dust clouds. Color palette: warm amber dust, desaturated olive green, rust orange, weathered concrete grey, golden sunlight, muted teal sky. Leave the top 18% as dusty gradient for the title in bold distressed Chinese font, and bottom 8% for the author name. Cinematic desaturated photography, golden hour lighting, epic scale, atmospheric haze, suitable for all novel platforms, 8K.",
+    "source": "novel-cover",
+    "imageUrl": "",
+    "scenario": "novel-cover"
+  },
+  {
+    "id": "novel-10",
+    "title": "无限流小说封面 · 破碎空间",
+    "category": "futuristic",
+    "tags": [
+      "futuristic",
+      "3d",
+      "character"
+    ],
+    "prompt": "A vertical 2:3 book cover for an infinite loop/dimensional (无限流) novel. Reality is fracturing: the scene shows a normal city street that is literally cracking and breaking apart like glass, with glowing geometric shards floating into a void. Through the cracks, a surreal alternate dimension is visible with floating islands, impossible architecture, and a blood-red moon. A figure in a black hoodie stands at the boundary between realities, one foot on the normal street, one foot on a floating shard, hand reaching toward the rift. Glowing data fragments and digital noise pattern the edges of the cracks. Color palette: normal world in muted realistic tones, rift dimension in vivid red-orange-cyan, black void, white data fragments. Leave the top 20% for the title in bold glitch-effect Chinese font with partial color displacement, and bottom 8% for author name. Surreal sci-fi art, dramatic perspective, reality-breaking visual effect, high contrast between mundane and extraordinary, suitable for Fanqie/Qidian platform, 8K.",
+    "source": "novel-cover",
+    "imageUrl": "",
+    "scenario": "novel-cover"
+  },
+  {
+    "id": "novel-11",
+    "title": "历史小说封面 · 金戈铁马",
+    "category": "landscape",
+    "tags": [
+      "landscape",
+      "character",
+      "photography"
+    ],
+    "prompt": "A vertical 2:3 book cover for a historical war (历史军事) novel. An epic battle scene on a vast dusty plain at dusk. A mounted general in ornate dark iron armor with a flowing red cape charges forward on a powerful war horse, sword raised. Behind him, an army of armored soldiers stretches to the horizon with war banners bearing ancient Chinese characters snapping in the wind. Dust and sand swirl around the horses' hooves. The setting sun casts dramatic long shadows and bathes the scene in deep amber and crimson light. Distant mountains and a fortified city wall are visible in the background. Color palette: deep crimson, burnished gold, iron dark, amber sunset, dust brown, blood red. Leave the top 18% for the title in bold seal-script style Chinese font, and bottom 8% for the author name. Epic historical painting style with photorealistic detail, dramatic backlighting, dynamic composition, cinematic scale, suitable for all platforms, 8K.",
+    "source": "novel-cover",
+    "imageUrl": "",
+    "scenario": "novel-cover"
+  },
+  {
+    "id": "novel-12",
+    "title": "重生小说封面 · 时光倒流",
+    "category": "portrait",
+    "tags": [
+      "portrait",
+      "photography",
+      "minimalist"
+    ],
+    "prompt": "A vertical 3:4 book cover for a rebirth/reincarnation (重生) novel. A split-composition image: the left half shows a cold, dark scene of a person falling backwards in slow motion into deep black water, eyes closing, clothes and hair floating upward. The right half shows the same person as a younger version, opening their eyes with a look of determination, standing in bright warm sunlight in a classroom or home setting. A thin line of golden light splits the two halves diagonally, with clock fragments and water droplets floating along the divide. The transition symbolizes death and rebirth. Color palette: left side in cold blue-black-teal, right side in warm golden-cream-white, golden dividing line. Leave the top 20% as a gradient for the title in bold Chinese font with a subtle golden shimmer effect, and bottom 8% for author name. Symbolic conceptual photography, dramatic split lighting, surreal transition, suitable for all novel platforms, 8K.",
+    "source": "novel-cover",
+    "imageUrl": "",
+    "scenario": "novel-cover"
+  },
+  {
+    "id": "novel-13",
+    "title": "轻小说封面 · 校园奇幻冒险",
+    "category": "character",
+    "tags": [
+      "character",
+      "gaming"
+    ],
+    "prompt": "A vertical 2:3 book cover for a light novel / campus fantasy (轻小说/校园奇幻). Anime illustration style: a cheerful high school girl with twintails in a slightly modified school uniform (with fantasy elements like a glowing brooch and runic trim) stands in the center, wielding an oversized magical staff that looks like it's made from a modified umbrella. She's winking and making a peace sign. Behind her, a normal Japanese-style school building on the left transitions into a floating magical castle on the right, with a magical portal connecting them. Cherry blossom petals and sparkles fill the air. A small cute mascot creature (a round floating cat-like spirit with star eyes) hovers beside her. Color palette: sky blue, cherry blossom pink, magical gold, school uniform navy, white clouds. Leave the top 20% for the title in playful rounded Japanese/Chinese font with star decorations, and bottom 8% for author name. Japanese light novel illustration style, vibrant colors, dynamic pose, cel-shaded with soft gradients, 4K.",
+    "source": "novel-cover",
+    "imageUrl": "",
+    "scenario": "novel-cover"
+  },
+  {
+    "id": "novel-14",
+    "title": "武侠小说封面 · 竹林对决",
+    "category": "landscape",
+    "tags": [
+      "landscape",
+      "character",
+      "paper-craft"
+    ],
+    "prompt": "A vertical 2:3 book cover for a wuxia (武侠) novel. Two swordsmen mid-duel in a dense bamboo forest during light rain. One in white robes leaps from a bamboo stalk with sword descending, the other in black robes parries from below, their blades clashing with a burst of sparks. Rain droplets hang suspended in the air. Bamboo stalks are sliced cleanly at various heights from the exchange. Mist drifts between the bamboo. A single red maple leaf floats in the foreground. Traditional Chinese ink wash painting style with selective color: mostly monochrome ink tones with the red maple leaf and sparks as the only vivid color accents. Color palette: ink black, mist grey, bamboo green-grey, rain silver, crimson red accent. Leave the top 22% for the title in bold brush-calligraphy Chinese style, and bottom 8% for author name. Chinese ink painting meets cinematic action, dramatic frozen moment, traditional aesthetic, suitable for all platforms, 8K.",
+    "source": "novel-cover",
+    "imageUrl": "",
+    "scenario": "novel-cover"
+  },
+  {
+    "id": "novel-15",
+    "title": "灵异小说封面 · 纸人灯笼",
+    "category": "photography",
+    "tags": [
+      "photography",
+      "minimalist",
+      "portrait"
+    ],
+    "prompt": "A vertical 2:3 book cover for a supernatural horror (灵异/恐怖) novel. An extremely eerie scene in a dark abandoned temple at night. Rows of traditional Chinese paper dolls (纸人) with painted blank faces stand propped up along both sides of the temple hall, as if watching. In the center, a single red paper lantern hangs from the ceiling, casting a sickly warm red glow that illuminates only the nearest paper dolls' faces. Beyond the circle of light, everything fades to absolute darkness. One paper doll in the front row has its head turned slightly toward the viewer, while all others face forward — creating subtle wrongness. Dust particles float in the dim light. A faint trail of paper money leads into the darkness at the far end. Color palette: blood red lantern glow, yellowed paper, absolute black darkness, pale white doll faces, faded gold paint. Leave the top 20% as pure black for the title in thin white Chinese font with slight red glow, and bottom 8% for author name. Horror atmosphere, extreme chiaroscuro, unsettling subtlety, suitable for all platforms, 8K.",
+    "source": "novel-cover",
+    "imageUrl": "",
+    "scenario": "novel-cover"
+  },
+  {
+    "id": "novel-16",
+    "title": "种田文封面 · 田园牧歌",
+    "category": "landscape",
+    "tags": [
+      "landscape",
+      "food",
+      "photography"
+    ],
+    "prompt": "A vertical 2:3 book cover for a farming/slice-of-life (种田文) novel. A warm, idyllic scene of a traditional Chinese countryside village in late afternoon golden hour. A young woman in simple cotton hanfu-style work clothes carries a woven bamboo basket of fresh vegetables along a stone path between terraced rice paddies. Ducks swim in a nearby pond. A thatched-roof farmhouse with a vegetable garden, fruit trees, and a small fenced yard sits on a hill. Cooking smoke rises from the chimney. In the background, rolling green hills with a small waterfall and a wooden water wheel. Golden light bathes the entire scene. Color palette: warm golden green, rice paddy emerald, earth brown, terracotta, sky blue, sunset gold. Leave the top 20% for the title in warm handwritten Chinese font, and bottom 8% for author name. Pastoral realism, warm color grading, shallow depth of field on the figure, wide scenic background, suitable for Fanqie/Jinjiang platforms, 8K.",
+    "source": "novel-cover",
+    "imageUrl": "",
+    "scenario": "novel-cover"
+  },
+  {
+    "id": "novel-17",
+    "title": "官场小说封面 · 权力棋局",
+    "category": "poster",
+    "tags": [
+      "poster",
+      "photography"
+    ],
+    "prompt": "A vertical 2:3 book cover for a political/power (官场) novel. A conceptual still-life composition: a luxurious dark mahogany desk seen from above at a slight angle. On the desk, an intricate Chinese chess (象棋) board mid-game with pieces strategically positioned — the red side clearly winning. Next to the board: a fine Chinese tea set with steam rising from a cup, a fountain pen on official red-stamped documents, a vintage rotary phone, and a single red rose in a crystal vase. The desk surface reflects warm ambient light. Background: out-of-focus bookshelves with leather-bound volumes, and a window showing a city government building at dusk. Color palette: rich mahogany brown, red chess pieces, cream documents, gold pen, deep burgundy, warm amber lighting. Leave the top 22% for the title in bold authoritative Chinese font, and bottom 8% for author name. Luxury editorial still-life photography, dramatic top lighting, rich textures, conceptual metaphor, suitable for all platforms, 8K.",
+    "source": "novel-cover",
+    "imageUrl": "",
+    "scenario": "novel-cover"
+  },
+  {
+    "id": "novel-18",
+    "title": "穿越小说封面 · 双世镜像",
+    "category": "portrait",
+    "tags": [
+      "portrait",
+      "fashion",
+      "photography"
+    ],
+    "prompt": "A vertical 2:3 book cover for a time-travel/transmigration (穿越) novel. A striking mirror/reflection composition: the upper half shows a modern Chinese woman in her 20s sitting in a contemporary apartment, wearing a simple white T-shirt, looking down at an ancient jade bracelet on her wrist with a look of wonder. The lower half shows the reflection in a bronze mirror, but instead of reflecting the modern scene, it shows the same woman in elaborate ancient Chinese palace attire from the Tang Dynasty, sitting in an ornate palace chamber, looking back with knowing eyes. The jade bracelet is the connecting element, glowing faintly with ethereal light at the point where the two worlds meet. Color palette: upper half in cool modern tones (white, grey, soft blue), lower half in warm ancient tones (gold, imperial red, jade green), the bracelet glows with soft white light. Leave the top 18% for the title in dual-style Chinese font (modern on top transitioning to traditional below), and bottom 8% for author name. Cinematic split-world composition, conceptual photography, rich contrast between eras, 8K.",
+    "source": "novel-cover",
+    "imageUrl": "",
+    "scenario": "novel-cover"
+  },
+  {
+    "id": "novel-19",
+    "title": "竞技小说封面 · 电竞战场",
+    "category": "gaming",
+    "tags": [
+      "gaming",
+      "futuristic",
+      "character"
+    ],
+    "prompt": "A vertical 2:3 book cover for an esports/gaming (电竞) novel. A dramatic scene of a young male gamer in a professional esports jersey with team logo, sitting in a gaming chair before a multi-monitor setup in a dark arena. His face is illuminated by the screens showing a MOBA game in progress. One hand on the mouse, the other on the keyboard, fingers in intense motion. The screen light reflects in his focused eyes. Behind him, a massive dark arena with spotlights and a cheering crowd is blurred with motion. Holographic game characters from the MOBA game float around him as semi-transparent projections, as if he's summoning them into reality. His gamertag glows on the monitors. Color palette: dark arena black, neon blue screen glow, team jersey in red and white, holographic game characters in cyan and gold, crowd lights in amber. Leave the top 20% for the title in bold digital/gaming Chinese font with LED glow effect, and bottom 8% for author name. Cinematic esports photography, dual-world aesthetic, screen glow lighting, suitable for all novel platforms, 8K.",
+    "source": "novel-cover",
+    "imageUrl": "",
+    "scenario": "novel-cover"
+  },
+  {
+    "id": "novel-20",
+    "title": "规则怪谈封面 · 禁止事项清单",
+    "category": "poster",
+    "tags": [
+      "poster",
+      "minimalist",
+      "photography"
+    ],
+    "prompt": "A vertical 2:3 book cover for a rules-based horror (规则怪谈) novel. A minimalist but deeply unsettling composition. On a dark, slightly textured black background, a single sheet of aged yellowed paper is pinned to the center with a rusted metal pin. The paper has handwritten Chinese rules in red ink that are partially readable, such as '规则一：不要回头看' (Rule 1: Do not look back), '规则三：如果听到敲门声...' (Rule 3: If you hear knocking...). Some lines are violently scribbled out in black ink. A single bloody fingerprint smudges the lower right corner of the paper. The paper's edges are burnt and curling. In the dark space around the paper, barely visible, is the faintest suggestion of a face watching from the darkness — so subtle it might be a trick of the mind. Color palette: near-black background, aged yellow paper, blood red ink, burnt edges, rusted metal. Leave the top 18% as black for the title in stark white Chinese font, and bottom 8% for author name. Minimalist horror, found-document aesthetic, psychological unease, extreme negative space, suitable for all platforms, 8K.",
+    "source": "novel-cover",
+    "imageUrl": "",
+    "scenario": "novel-cover"
   }
 ]

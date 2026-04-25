@@ -31,7 +31,23 @@ export async function POST(request: Request) {
       "publishing": "Publishing & Editorial",
       "film-media": "Film & Media Production",
       "ui-ux": "UI/UX Design",
+      "novel-cover": "Novel Cover Design",
     }[scenario] || scenario;
+
+    const novelCoverTips = scenario === "novel-cover" ? `
+Novel Cover Design specific requirements:
+- The cover must have a strong visual focal point that immediately conveys the genre and mood
+- Leave appropriate negative space for the novel title and author name (typically top or center)
+- For Xianxia/Fantasy novels: Use epic atmospheric scenes with floating elements, divine light, mythical creatures, ancient architecture, or a lone powerful figure. Color palette: deep blues, golds, emerald greens, crimson reds. Style: Chinese fantasy painting with dramatic volumetric lighting
+- For Romance/Yanqing novels: Feature an elegant character portrait or a romantic scene. Color palette: soft pinks, warm roses, lavender, cream whites. Style: dreamy, soft-focus aesthetic with bokeh or light leaks
+- For Sci-Fi novels: Use futuristic cityscapes, spacecraft, cyberpunk elements, or holographic interfaces. Color palette: neon cyan, electric blue, deep purple, metallic silver. Style: cinematic sci-fi with lens flares and holographic effects
+- For Mystery/Suspense novels: Create moody, dark atmosphere with shadows, silhouettes, rain, fog, or a solitary figure in dim light. Color palette: dark navy, charcoal, blood red accent, muted gold. Style: noir photography with high contrast
+- For Urban/Modern novels: Feature modern cityscape, business setting, or contemporary lifestyle. Color palette: warm amber, steel grey, deep burgundy, cream. Style: cinematic editorial with shallow depth of field
+- Aspect ratio should typically be 2:3 or 3:4 for book covers (vertical portrait orientation)
+- Include title text area: specify where the novel title should go and what font style (e.g., "bold calligraphic Chinese title text at top", "elegant serif title in center")
+- Ensure the composition works as a thumbnail (clear silhouette, strong contrast, readable at small size)
+- Consider platform-specific requirements: Qidian (起点) covers favor bold fantasy art; Jinjiang (晋江) covers favor elegant romance aesthetics; Fanqie (番茄) covers favor attention-grabbing, high-contrast designs
+` : "";
 
     const systemPrompt = `You are an expert GPT Image 2 prompt engineer. Based on the user's input, generate a detailed, high-quality prompt for GPT Image 2 image generation.
 
@@ -61,6 +77,8 @@ Style-specific tips:
 - Food: Describe textures, steam, plating, lighting angle, background setting
 - 3D/Isometric: Specify render style, material properties, camera perspective, lighting setup
 - Infographic: Detail layout grid, data visualization type, color coding, label format
+
+${novelCoverTips}
 
 ${languageInstruction}
 

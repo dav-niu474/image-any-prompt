@@ -114,6 +114,11 @@ export default function Home() {
                 YouMind
                 <ExternalLink className="size-2.5 opacity-50" />
               </a>
+              <span
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-rose-500/10 border border-rose-500/20 text-xs text-rose-300 backdrop-blur-sm"
+              >
+                📖 小说封面
+              </span>
             </div>
           </div>
 
@@ -122,8 +127,8 @@ export default function Home() {
             {[
               { label: "提示词数量", value: prompts.length || "160+", icon: "📝" },
               { label: "内容类别", value: categories.length || "19", icon: "🏷️" },
-              { label: "应用场景", value: scenarios.length || "13", icon: "🎯" },
-              { label: "数据来源", value: "4+", icon: "📚" },
+              { label: "应用场景", value: scenarios.length || "14", icon: "🎯" },
+              { label: "数据来源", value: "5+", icon: "📚" },
               { label: "AI 引擎", value: "NVIDIA", icon: "⚡" },
             ].map((stat) => (
               <div

@@ -34,6 +34,7 @@ export const SOURCE_LABELS: Record<string, string> = {
   "opennana-gpt": "OpenNana GPT",
   "awesome-gpt-image": "Awesome GPT Image",
   "awesome-gpt-image-2": "Awesome GPT Image 2",
+  "novel-cover": "小说封面设计",
 };
 
 export const CATEGORY_COLORS: Record<string, string> = {
@@ -116,6 +117,7 @@ export const SCENARIO_COLORS: Record<string, string> = {
   publishing: "bg-cyan-500/20 text-cyan-400 border-cyan-500/30",
   "film-media": "bg-purple-500/20 text-purple-400 border-purple-500/30",
   "ui-ux": "bg-sky-500/20 text-sky-400 border-sky-500/30",
+  "novel-cover": "bg-rose-500/20 text-rose-300 border-rose-500/30",
 };
 
 export const SCENARIO_ICONS: Record<string, string> = {
@@ -132,6 +134,7 @@ export const SCENARIO_ICONS: Record<string, string> = {
   publishing: "📰",
   "film-media": "🎬",
   "ui-ux": "💻",
+  "novel-cover": "📖",
 };
 
 export const SOURCE_COLORS: Record<string, string> = {
@@ -139,6 +142,7 @@ export const SOURCE_COLORS: Record<string, string> = {
   "opennana-gpt": "bg-purple-500/20 text-purple-400 border-purple-500/30",
   "awesome-gpt-image": "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
   "awesome-gpt-image-2": "bg-amber-500/20 text-amber-400 border-amber-500/30",
+  "novel-cover": "bg-rose-500/20 text-rose-300 border-rose-500/30",
 };
 
 export function truncateText(text: string, maxLength: number): string {
@@ -208,11 +212,17 @@ export const STYLES = [
   { id: "minimalist", label: "◽ Minimalist", description: "Clean minimal design" },
   { id: "poster", label: "📰 Poster", description: "Poster & typography" },
   { id: "ui-design", label: "📱 UI Design", description: "Interface design" },
+  { id: "novel-fantasy", label: "⚔️ Fantasy Novel", description: "Chinese fantasy/xianxia novel cover" },
+  { id: "novel-romance", label: "💕 Romance Novel", description: "Romance/yanqing novel cover" },
+  { id: "novel-sci-fi", label: "🚀 Sci-Fi Novel", description: "Science fiction novel cover" },
+  { id: "novel-mystery", label: "🔮 Mystery Novel", description: "Mystery/suspense novel cover" },
+  { id: "novel-urban", label: "🏙️ Urban Novel", description: "Urban/modern novel cover" },
 ];
 
 export const ASPECT_RATIOS = [
   { id: "1:1", label: "1:1" },
   { id: "3:4", label: "3:4" },
+  { id: "2:3", label: "2:3 (小说封面)" },
   { id: "4:3", label: "4:3" },
   { id: "9:16", label: "9:16" },
   { id: "16:9", label: "16:9" },
