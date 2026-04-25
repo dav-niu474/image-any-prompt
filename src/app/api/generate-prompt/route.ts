@@ -76,47 +76,56 @@ Respond with ONLY the generated prompt text, no explanation, no markdown formatt
 
 Generate a detailed, professional prompt that would produce an excellent image for the specified application scenario. Be specific about every visual element.`;
 
-    // Use NVIDIA API
+    // Use NVIDIA API with fallback model chain
     const nvidiaApiKey = process.env.NVIDIA_API_KEY;
-    const modelName = "nvidia/llama-3.1-nemotron-70b-instruct";
+
+    // Model priority chain - try models in order until one works
+    const nvidiaModels = [
+      { id: "meta/llama-3.3-70b-instruct", label: "NVIDIA Llama 3.3 70B" },
+      { id: "nvidia/llama-3.1-nemotron-70b-instruct", label: "NVIDIA Nemotron 70B" },
+      { id: "deepseek-ai/deepseek-v4-flash", label: "NVIDIA DeepSeek V4 Flash" },
+    ];
 
     if (nvidiaApiKey) {
-      try {
-        const nvidiaResponse = await fetch("https://integrate.api.nvidia.com/v1/chat/completions", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${nvidiaApiKey}`,
-          },
-          body: JSON.stringify({
-            model: modelName,
-            messages: [
-              { role: "system", content: systemPrompt },
-              { role: "user", content: userPrompt },
-            ],
-            max_tokens: 1500,
-            temperature: 0.8,
-            top_p: 0.9,
-          }),
-        });
+      for (const model of nvidiaModels) {
+        try {
+          const nvidiaResponse = await fetch("https://integrate.api.nvidia.com/v1/chat/completions", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${nvidiaApiKey}`,
+            },
+            body: JSON.stringify({
+              model: model.id,
+              messages: [
+                { role: "user", content: `${systemPrompt}\n\n${userPrompt}` },
+              ],
+              max_tokens: 1500,
+              temperature: 0.8,
+              top_p: 0.9,
+            }),
+          });
 
-        if (nvidiaResponse.ok) {
-          const data = await nvidiaResponse.json();
-          const generatedPrompt = data.choices?.[0]?.message?.content;
+          if (nvidiaResponse.ok) {
+            const data = await nvidiaResponse.json();
+            const generatedPrompt = data.choices?.[0]?.message?.content;
 
-          if (generatedPrompt) {
-            return Response.json({
-              prompt: generatedPrompt.trim(),
-              model: "NVIDIA Llama 3.1 Nemotron 70B"
-            });
+            if (generatedPrompt) {
+              return Response.json({
+                prompt: generatedPrompt.trim(),
+                model: model.label,
+              });
+            }
           }
-        }
 
-        // If NVIDIA fails, fall through to fallback
-        console.warn("NVIDIA API failed, using fallback");
-      } catch (nvidiaError) {
-        console.warn("NVIDIA API error, using fallback:", nvidiaError);
+          console.warn(`NVIDIA model ${model.id} failed with status ${nvidiaResponse.status}`);
+        } catch (modelError) {
+          console.warn(`NVIDIA model ${model.id} error:`, modelError);
+        }
       }
+
+      // All NVIDIA models failed, fall through to fallback
+      console.warn("All NVIDIA models failed, using fallback");
     }
 
     // Fallback: Use z-ai-web-dev-sdk
@@ -137,7 +146,7 @@ Generate a detailed, professional prompt that would produce an excellent image f
 
     return Response.json({
       prompt: generatedPrompt,
-      model: "GPT-4o Mini (Fallback)"
+      model: "GPT-4o Mini (Fallback)",
     });
   } catch (error) {
     console.error("Error generating prompt:", error);
