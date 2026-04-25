@@ -80,3 +80,34 @@ Stage Summary:
 - Code pushed to GitHub: https://github.com/dav-niu474/image-any-prompt
 - Vercel deployment: https://my-project-snowy-eight.vercel.app (alias) / https://image-any-prompt-dav-niu474s-projects.vercel.app
 - All lint checks pass, both local dev and Vercel production working
+
+---
+Task ID: 4
+Agent: Main Agent
+Task: Fix NVIDIA API model compatibility, add example images from reference repos
+
+Work Log:
+- Diagnosed NVIDIA API 404 error: nvidia/llama-3.1-nemotron-70b-instruct not available for this account
+- Tested available NVIDIA models: meta/llama-3.3-70b-instruct works, deepseek-ai/deepseek-v4-flash works
+- Updated /api/generate-prompt with model fallback chain: llama-3.3-70b -> nemotron-70b -> deepseek-v4-flash -> gpt-4o-mini
+- Changed message format to single user message for NVIDIA API compatibility
+- Cloned all 4 reference repos to /tmp/repos/ for image URL extraction
+- Parsed opennana-gallery nano_prompts JSON - found 279 prompts with imageUrl fields
+- Mapped opennana case numbers to GitHub Pages image URLs (zhenglarry007.github.io/opennana-gallery/assets/images/)
+- Extracted 153 image URLs from awesome-gpt-image-2 README.md (cms-assets.youmind.com CDN)
+- Extracted image URLs from awesome-gpt-image README.md (github user-attachments, pbs.twimg.com, raw.githubusercontent.com)
+- Used fuzzy text matching to pair image URLs with prompt entries
+- All 164 prompts now have imageUrl populated (100% coverage)
+- Updated prompt-card.tsx with image preview: aspect-[4/3] image with hover zoom effect, source badge overlay
+- Updated prompt-detail-dialog.tsx with larger image preview and thumbnail images in related prompts list
+- Added remote image patterns to next.config.ts for all external image domains
+- Pushed to GitHub and redeployed to Vercel
+- Verified production API working with NVIDIA Llama 3.3 70B model
+- Verified image URLs accessible from external CDNs
+
+Stage Summary:
+- NVIDIA API fixed: using meta/llama-3.3-70b-instruct (working model)
+- All 164 prompts now have example images from source repos
+- Gallery cards show image previews with hover effects
+- Detail dialog shows larger images and thumbnails in related prompts
+- Production site: https://my-project-snowy-eight.vercel.app
