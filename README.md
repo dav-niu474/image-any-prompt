@@ -1,7 +1,7 @@
 # Image Any Prompt - GPT Image 2 提示词精华库
 
 <p align="center">
-  <strong>精选 184 条高质量 AI 图像生成提示词 · 涵盖 19 个类别 · 14 种应用场景 · NVIDIA AI 驱动</strong>
+  <strong>精选 2600+ 条高质量 AI 图像生成提示词 · 涵盖 19 个类别 · 14 种应用场景 · 5 大数据源 · NVIDIA AI 驱动</strong>
 </p>
 
 <p align="center">
@@ -20,10 +20,11 @@
 
 ## ✨ 功能特色
 
-- 🖼️ **提示词图库** - 浏览和搜索 184 条精选 AI 图像提示词，每条均附带真实生成图例
+- 🖼️ **提示词图库** - 浏览和搜索 2600+ 条精选 AI 图像提示词，每条均附带真实生成图例
 - 🖼️ **示例图片展示** - 从源仓库提取的真实 GPT Image 生成效果图片，直观展示提示词效果
 - 🎯 **应用场景分类** - 按 14 种应用场景（电商、社交媒体、品牌设计、小说封面等）筛选提示词
-- 🏷️ **多维度筛选** - 支持按类别（19 种）、来源（4 个仓库）、场景三维筛选
+- 🏷️ **多维度筛选** - 支持按类别（19 种）、来源（5 个仓库）、场景三维筛选
+- 📄 **分页浏览** - 支持分页加载，流畅浏览大量提示词
 - ✨ **AI 智能生成** - 基于 NVIDIA Llama 3.3 70B 模型智能生成提示词，支持多模型自动降级
 - 📋 **一键复制** - 快速复制提示词到剪贴板
 - 🔍 **全文搜索** - 搜索标题、提示词内容和标签
@@ -37,7 +38,7 @@
 
 | 图库浏览 | AI 生成 |
 |---------|--------|
-| 浏览 164 条精选提示词，附带真实效果图例 | 输入描述，AI 自动生成专业提示词 |
+| 浏览 2600+ 条精选提示词，附带真实效果图例 | 输入描述，AI 自动生成专业提示词 |
 
 ## 📊 数据来源
 
@@ -45,12 +46,13 @@
 
 | 来源 | 仓库 | 说明 |
 |------|------|------|
-| OpenNana Nano | [zhenglarry007/opennana-gallery](https://github.com/zhenglarry007/opennana-gallery) | 纳米提示词精选集合（277+ 原始提示词） |
-| Awesome GPT Image | [ZeroLu/awesome-gpt-image](https://github.com/ZeroLu/awesome-gpt-image) | GPT Image 提示词合集（64 条精选） |
-| Awesome GPT Image 2 | [YouMind-OpenLab/awesome-gpt-image-2](https://github.com/YouMind-OpenLab/awesome-gpt-image-2) | GPT Image 2 进阶提示词（127 条精选） |
-| Awesome GPTImage2 | [xianyu110/awesome-gptimage2](https://github.com/xianyu110/awesome-gptimage2) | GPT Image 2 社区精选 |
+| OpenNana Nano | [zhenglarry007/opennana-gallery](https://github.com/zhenglarry007/opennana-gallery) | 纳米提示词精选集合（279 条） |
+| OpenNana GPT | [zhenglarry007/opennana-gallery](https://github.com/zhenglarry007/opennana-gallery) | GPT 提示词精选集合（47 条） |
+| Awesome GPT Image | [ZeroLu/awesome-gpt-image](https://github.com/ZeroLu/awesome-gpt-image) | GPT Image 提示词合集（69 条） |
+| Awesome GPT Image 2 | [YouMind-OpenLab/awesome-gpt-image-2](https://github.com/YouMind-OpenLab/awesome-gpt-image-2) | GPT Image 2 进阶提示词（2168 条） |
+| Awesome GPTImage2 | [xianyu110/awesome-gptimage2](https://github.com/xianyu110/awesome-gptimage2) | GPT Image 2 社区精选（83 条） |
 
-所有提示词均经过去重、筛选和分类，最终精选 184 条高质量提示词（含 20 条小说封面专属提示词）。每条提示词均附带从源仓库提取的真实生成效果图片。
+所有提示词均经过去重、筛选和分类，最终收录 2662 条高质量提示词（含 20 条小说封面专属提示词）。每条提示词均附带从源仓库提取的真实生成效果图片。
 
 ## 🎯 应用场景分类
 
@@ -136,7 +138,7 @@
 | 参数 | 可选值 |
 |------|--------|
 | 风格 | Photography, Illustration, 3D Render, Anime, Sketch, Watercolor, Pixel Art, Cyberpunk, Chinese Ink, Minimalist, Poster, UI Design |
-| 应用场景 | 13 种场景可选 |
+| 应用场景 | 14 种场景可选 |
 | 内容类别 | 19 种类别可选 |
 | 宽高比 | 1:1, 3:4, 4:3, 9:16, 16:9 |
 | 画质等级 | Standard, High, Ultra |
@@ -214,7 +216,7 @@ npm run start
 ```
 ├── public/
 │   ├── data/
-│   │   ├── prompts.json          # 184 条提示词数据（含 imageUrl）
+│   │   ├── prompts.json          # 2662 条提示词数据（含 imageUrl）
 │   │   ├── categories.json       # 19 个内容类别
 │   │   └── scenarios.json        # 14 种应用场景
 │   ├── hero-banner.png           # 首页横幅背景
@@ -254,13 +256,13 @@ npm run start
 
 ```typescript
 interface Prompt {
-  id: string;           // 唯一标识，如 "nano-1", "youmind-3", "zerolu-2"
+  id: string;           // 唯一标识，如 "nano-1", "youmind-3", "zerolu-2", "gpt-1", "xianyu-1", "novel-1"
   title: string;        // 标题
   category: string;     // 内容类别（19 种）
-  scenario: string;     // 应用场景（13 种）
+  scenario: string;     // 应用场景（14 种）
   tags: string[];       // 标签列表
   prompt: string;       // 完整提示词文本
-  source: string;       // 数据来源（opennana-nano / awesome-gpt-image / awesome-gpt-image-2）
+  source: string;       // 数据来源（opennana-nano / opennana-gpt / awesome-gpt-image / awesome-gpt-image-2 / awesome-gptimage2 / novel-cover）
   imageUrl: string;     // 示例图片 URL（来自源仓库的真实生成效果）
 }
 ```
@@ -315,9 +317,9 @@ MIT License
 
 感谢所有开源项目贡献者的辛勤工作，本项目的数据来源于以上提到的开源仓库：
 
-- [OpenNana Gallery](https://github.com/zhenglarry007/opennana-gallery) - 提供大量精选提示词及对应效果图
-- [Awesome GPT Image](https://github.com/ZeroLu/awesome-gpt-image) - 提供 GPT Image 提示词合集
-- [Awesome GPT Image 2](https://github.com/YouMind-OpenLab/awesome-gpt-image-2) - 提供 GPT Image 2 进阶提示词及效果图
-- [Awesome GPTImage2](https://github.com/xianyu110/awesome-gptimage2) - 提供 GPT Image 2 社区精选
+- [OpenNana Gallery](https://github.com/zhenglarry007/opennana-gallery) - 提供大量精选提示词及对应效果图（Nano + GPT 合集 326 条）
+- [Awesome GPT Image](https://github.com/ZeroLu/awesome-gpt-image) - 提供 GPT Image 提示词合集（69 条）
+- [Awesome GPT Image 2](https://github.com/YouMind-OpenLab/awesome-gpt-image-2) - 提供 GPT Image 2 进阶提示词及效果图（2168 条）
+- [Awesome GPTImage2](https://github.com/xianyu110/awesome-gptimage2) - 提供 GPT Image 2 社区精选实战手册（83 条）
 
 特别感谢 [NVIDIA](https://www.nvidia.com/) 提供的 AI 模型 API 服务。

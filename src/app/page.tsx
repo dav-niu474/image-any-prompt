@@ -77,7 +77,7 @@ export default function Home() {
                   </span>
                 </h1>
                 <p className="text-sm text-slate-400 mt-1">
-                  精选 {prompts.length > 0 ? prompts.length : "160+"} 条高质量提示词 · 涵盖 {categories.length > 0 ? categories.length : "19"} 个类别 · {scenarios.length > 0 ? scenarios.length : "13"} 种应用场景 · NVIDIA AI 驱动
+                  精选 {prompts.length > 0 ? `${prompts.length}+` : "2600+"} 条高质量提示词 · 涵盖 {categories.length > 0 ? categories.length : "19"} 个类别 · {scenarios.length > 0 ? scenarios.length : "14"} 种应用场景 · NVIDIA AI 驱动
                 </p>
               </div>
             </div>
@@ -114,6 +114,16 @@ export default function Home() {
                 YouMind
                 <ExternalLink className="size-2.5 opacity-50" />
               </a>
+              <a
+                href="https://github.com/xianyu110/awesome-gptimage2"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-800/60 border border-slate-700/50 text-xs text-slate-400 hover:text-emerald-400 hover:border-emerald-500/30 transition-all backdrop-blur-sm"
+              >
+                <Github className="size-3" />
+                GPTImage2
+                <ExternalLink className="size-2.5 opacity-50" />
+              </a>
               <span
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-rose-500/10 border border-rose-500/20 text-xs text-rose-300 backdrop-blur-sm"
               >
@@ -125,10 +135,10 @@ export default function Home() {
           {/* Feature highlights */}
           <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 mt-6">
             {[
-              { label: "提示词数量", value: prompts.length || "160+", icon: "📝" },
+              { label: "提示词数量", value: prompts.length || "2600+", icon: "📝" },
               { label: "内容类别", value: categories.length || "19", icon: "🏷️" },
               { label: "应用场景", value: scenarios.length || "14", icon: "🎯" },
-              { label: "数据来源", value: "5+", icon: "📚" },
+              { label: "数据来源", value: "5", icon: "📚" },
               { label: "AI 引擎", value: "NVIDIA", icon: "⚡" },
             ].map((stat) => (
               <div
@@ -211,6 +221,8 @@ export default function Home() {
                 <a href="https://github.com/ZeroLu/awesome-gpt-image" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-400 transition-colors">Awesome GPT Image</a>
                 <span>·</span>
                 <a href="https://github.com/YouMind-OpenLab/awesome-gpt-image-2" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-400 transition-colors">YouMind</a>
+                <span>·</span>
+                <a href="https://github.com/xianyu110/awesome-gptimage2" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-400 transition-colors">GPTImage2</a>
               </span>
               <span className="flex items-center gap-1 text-slate-500">
                 AI Powered by <Cpu className="size-3 text-green-400" /> NVIDIA

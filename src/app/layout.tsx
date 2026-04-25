@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "GPT Image 2 提示词精华库 | Awesome Prompt Gallery",
-  description: "精选 160+ 条高质量 GPT Image 2 提示词，涵盖摄影、人像、海报、UI、角色设计等 19 个类别。支持 AI 智能生成提示词，快速复制，探索灵感。",
+  description: "精选 2600+ 条高质量 GPT Image 2 提示词，涵盖摄影、人像、海报、UI、角色设计等 19 个类别、14 种应用场景。支持 AI 智能生成提示词，快速复制，探索灵感。",
   keywords: ["GPT Image 2", "提示词", "Prompt", "AI绘画", "OpenAI", "图片生成", "Prompt Engineering"],
   authors: [{ name: "GPT Image 2 Prompt Gallery" }],
   icons: {
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "GPT Image 2 提示词精华库",
-    description: "精选 160+ 条高质量 GPT Image 2 提示词，涵盖 19 个类别",
+    description: "精选 2600+ 条高质量 GPT Image 2 提示词，涵盖 19 个类别、14 种场景",
     type: "website",
   },
 };

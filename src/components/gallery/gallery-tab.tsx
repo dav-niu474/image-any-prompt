@@ -1,15 +1,15 @@
 "use client";
 
 import { useState, useMemo, useCallback } from "react";
-import { Prompt, Category, Scenario, CategoriesData, ScenariosData, SOURCE_LABELS, SCENARIO_COLORS, SCENARIO_ICONS, filterPrompts } from "@/lib/prompt-data";
+import { Prompt, Category, Scenario, SOURCE_LABELS, SCENARIO_COLORS, filterPrompts } from "@/lib/prompt-data";
 import { SearchBar } from "./search-bar";
 import { CategoryChips } from "./category-chips";
 import { ScenarioChips } from "./scenario-chips";
 import { PromptCard } from "./prompt-card";
 import { PromptDetailDialog } from "./prompt-detail-dialog";
 import { Badge } from "@/components/ui/badge";
-import { Filter, Grid3X3, LayoutGrid, Layers } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Filter, Grid3X3, LayoutGrid, Layers, ChevronLeft, ChevronRight } from "lucide-react";
 
 interface GalleryTabProps {
   prompts: Prompt[];
@@ -18,6 +18,7 @@ interface GalleryTabProps {
 }
 
 const ALL_SOURCES = Object.keys(SOURCE_LABELS);
+const PAGE_SIZE = 48;
 
 export function GalleryTab({ prompts, categories, scenarios }: GalleryTabProps) {
   const [searchQuery, setSearchQuery] = useState("");
@@ -29,11 +30,18 @@ export function GalleryTab({ prompts, categories, scenarios }: GalleryTabProps) 
   const [showSourceFilter, setShowSourceFilter] = useState(false);
   const [showScenarioFilter, setShowScenarioFilter] = useState(false);
   const [compactView, setCompactView] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const filteredPrompts = useMemo(
     () => filterPrompts(prompts, searchQuery, selectedCategories, selectedSources, selectedScenarios),
     [prompts, searchQuery, selectedCategories, selectedSources, selectedScenarios]
   );
+
+  // Reset page when filters change
+  const handleSearchChange = useCallback((q: string) => {
+    setSearchQuery(q);
+    setCurrentPage(1);
+  }, []);
 
   const handleToggleCategory = useCallback((categoryId: string) => {
     setSelectedCategories((prev) =>
@@ -41,10 +49,12 @@ export function GalleryTab({ prompts, categories, scenarios }: GalleryTabProps) 
         ? prev.filter((c) => c !== categoryId)
         : [...prev, categoryId]
     );
+    setCurrentPage(1);
   }, []);
 
   const handleClearCategories = useCallback(() => {
     setSelectedCategories([]);
+    setCurrentPage(1);
   }, []);
 
   const handleToggleSource = useCallback((source: string) => {
@@ -53,6 +63,7 @@ export function GalleryTab({ prompts, categories, scenarios }: GalleryTabProps) 
         ? prev.filter((s) => s !== source)
         : [...prev, source]
     );
+    setCurrentPage(1);
   }, []);
 
   const handleToggleScenario = useCallback((scenarioId: string) => {
@@ -61,10 +72,12 @@ export function GalleryTab({ prompts, categories, scenarios }: GalleryTabProps) 
         ? prev.filter((s) => s !== scenarioId)
         : [...prev, scenarioId]
     );
+    setCurrentPage(1);
   }, []);
 
   const handleClearScenarios = useCallback(() => {
     setSelectedScenarios([]);
+    setCurrentPage(1);
   }, []);
 
   const handleCardClick = useCallback((prompt: Prompt) => {
@@ -76,16 +89,45 @@ export function GalleryTab({ prompts, categories, scenarios }: GalleryTabProps) 
     setSelectedPrompt(prompt);
   }, []);
 
+  // Pagination
+  const totalPages = Math.ceil(filteredPrompts.length / PAGE_SIZE);
+  const paginatedPrompts = useMemo(
+    () => filteredPrompts.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE),
+    [filteredPrompts, currentPage]
+  );
+
+  const handlePageChange = useCallback((page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
+  // Generate page numbers for display
+  const getPageNumbers = useCallback(() => {
+    const pages: (number | string)[] = [];
+    if (totalPages <= 7) {
+      for (let i = 1; i <= totalPages; i++) pages.push(i);
+    } else {
+      pages.push(1);
+      if (currentPage > 3) pages.push("...");
+      for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
+        pages.push(i);
+      }
+      if (currentPage < totalPages - 2) pages.push("...");
+      pages.push(totalPages);
+    }
+    return pages;
+  }, [totalPages, currentPage]);
+
   return (
     <div className="space-y-4">
       {/* Search and controls */}
       <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
-        <SearchBar value={searchQuery} onChange={setSearchQuery} />
+        <SearchBar value={searchQuery} onChange={handleSearchChange} />
         <div className="flex gap-2 items-center shrink-0">
           <Button
             variant="outline"
             size="sm"
-            onClick={() => setShowScenarioFilter(!showScenarioFilter)}
+            onClick={() => { setShowScenarioFilter(!showScenarioFilter); setShowSourceFilter(false); }}
             className={`h-9 gap-1.5 text-xs ${
               selectedScenarios.length > 0
                 ? "border-emerald-500/50 text-emerald-400 bg-emerald-500/10"
@@ -93,12 +135,12 @@ export function GalleryTab({ prompts, categories, scenarios }: GalleryTabProps) 
             }`}
           >
             <Layers className="size-3.5" />
-            应用场景 {selectedScenarios.length > 0 && `(${selectedScenarios.length})`}
+            场景 {selectedScenarios.length > 0 && `(${selectedScenarios.length})`}
           </Button>
           <Button
             variant="outline"
             size="sm"
-            onClick={() => setShowSourceFilter(!showSourceFilter)}
+            onClick={() => { setShowSourceFilter(!showSourceFilter); setShowScenarioFilter(false); }}
             className={`h-9 gap-1.5 text-xs ${
               selectedSources.length > 0
                 ? "border-emerald-500/50 text-emerald-400 bg-emerald-500/10"
@@ -147,7 +189,7 @@ export function GalleryTab({ prompts, categories, scenarios }: GalleryTabProps) 
           })}
           {selectedScenarios.length > 0 && (
             <button
-              onClick={() => setSelectedScenarios([])}
+              onClick={handleClearScenarios}
               className="text-xs text-slate-500 hover:text-slate-300 transition-colors ml-1"
             >
               清除
@@ -179,7 +221,7 @@ export function GalleryTab({ prompts, categories, scenarios }: GalleryTabProps) 
           })}
           {selectedSources.length > 0 && (
             <button
-              onClick={() => setSelectedSources([])}
+              onClick={() => { setSelectedSources([]); setCurrentPage(1); }}
               className="text-xs text-slate-500 hover:text-slate-300 transition-colors ml-1"
             >
               清除
@@ -201,6 +243,9 @@ export function GalleryTab({ prompts, categories, scenarios }: GalleryTabProps) 
         <span>
           显示 {filteredPrompts.length} / {prompts.length} 条提示词
         </span>
+        {totalPages > 1 && (
+          <span className="text-slate-600">· 第 {currentPage}/{totalPages} 页</span>
+        )}
         {(selectedCategories.length > 0 || selectedSources.length > 0 || selectedScenarios.length > 0 || searchQuery) && (
           <button
             onClick={() => {
@@ -208,6 +253,7 @@ export function GalleryTab({ prompts, categories, scenarios }: GalleryTabProps) 
               setSelectedSources([]);
               setSelectedScenarios([]);
               setSearchQuery("");
+              setCurrentPage(1);
             }}
             className="text-emerald-500 hover:text-emerald-400 transition-colors"
           >
@@ -231,7 +277,7 @@ export function GalleryTab({ prompts, categories, scenarios }: GalleryTabProps) 
               : "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
           }`}
         >
-          {filteredPrompts.map((prompt) => (
+          {paginatedPrompts.map((prompt) => (
             <PromptCard
               key={prompt.id}
               prompt={prompt}
@@ -239,6 +285,49 @@ export function GalleryTab({ prompts, categories, scenarios }: GalleryTabProps) 
               onClick={() => handleCardClick(prompt)}
             />
           ))}
+        </div>
+      )}
+
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <div className="flex items-center justify-center gap-1.5 pt-4 pb-2">
+          <Button
+            variant="outline"
+            size="sm"
+            disabled={currentPage <= 1}
+            onClick={() => handlePageChange(currentPage - 1)}
+            className="h-8 w-8 p-0 border-slate-700 text-slate-400 bg-slate-800/50 hover:border-slate-600 hover:text-slate-300 disabled:opacity-30"
+          >
+            <ChevronLeft className="size-4" />
+          </Button>
+          {getPageNumbers().map((page, i) =>
+            typeof page === "string" ? (
+              <span key={`ellipsis-${i}`} className="px-1 text-slate-600 text-xs">...</span>
+            ) : (
+              <Button
+                key={page}
+                variant="outline"
+                size="sm"
+                onClick={() => handlePageChange(page)}
+                className={`h-8 w-8 p-0 text-xs ${
+                  currentPage === page
+                    ? "border-emerald-500/50 text-emerald-400 bg-emerald-500/15"
+                    : "border-slate-700 text-slate-400 bg-slate-800/50 hover:border-slate-600 hover:text-slate-300"
+                }`}
+              >
+                {page}
+              </Button>
+            )
+          )}
+          <Button
+            variant="outline"
+            size="sm"
+            disabled={currentPage >= totalPages}
+            onClick={() => handlePageChange(currentPage + 1)}
+            className="h-8 w-8 p-0 border-slate-700 text-slate-400 bg-slate-800/50 hover:border-slate-600 hover:text-slate-300 disabled:opacity-30"
+          >
+            <ChevronRight className="size-4" />
+          </Button>
         </div>
       )}
 
