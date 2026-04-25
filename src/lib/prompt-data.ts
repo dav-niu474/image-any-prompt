@@ -34,6 +34,7 @@ export const SOURCE_LABELS: Record<string, string> = {
   "opennana-gpt": "OpenNana GPT",
   "awesome-gpt-image": "Awesome GPT Image",
   "awesome-gpt-image-2": "Awesome GPT Image 2",
+  "awesome-gptimage2": "Awesome GPTImage2",
   "novel-cover": "小说封面设计",
 };
 
@@ -142,6 +143,7 @@ export const SOURCE_COLORS: Record<string, string> = {
   "opennana-gpt": "bg-purple-500/20 text-purple-400 border-purple-500/30",
   "awesome-gpt-image": "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
   "awesome-gpt-image-2": "bg-amber-500/20 text-amber-400 border-amber-500/30",
+  "awesome-gptimage2": "bg-lime-500/20 text-lime-400 border-lime-500/30",
   "novel-cover": "bg-rose-500/20 text-rose-300 border-rose-500/30",
 };
 
