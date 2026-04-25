@@ -1,6 +1,6 @@
 export async function POST(request: Request) {
   try {
-    const { subject, style, category, scenario, aspectRatio, quality, language } =
+    const { subject, style, category, scenario, aspectRatio, quality, language, scenarioParams } =
       await request.json();
 
     if (!subject || !subject.trim()) {
@@ -34,20 +34,8 @@ export async function POST(request: Request) {
       "novel-cover": "Novel Cover Design",
     }[scenario] || scenario;
 
-    const novelCoverTips = scenario === "novel-cover" ? `
-Novel Cover Design specific requirements:
-- The cover must have a strong visual focal point that immediately conveys the genre and mood
-- Leave appropriate negative space for the novel title and author name (typically top or center)
-- For Xianxia/Fantasy novels: Use epic atmospheric scenes with floating elements, divine light, mythical creatures, ancient architecture, or a lone powerful figure. Color palette: deep blues, golds, emerald greens, crimson reds. Style: Chinese fantasy painting with dramatic volumetric lighting
-- For Romance/Yanqing novels: Feature an elegant character portrait or a romantic scene. Color palette: soft pinks, warm roses, lavender, cream whites. Style: dreamy, soft-focus aesthetic with bokeh or light leaks
-- For Sci-Fi novels: Use futuristic cityscapes, spacecraft, cyberpunk elements, or holographic interfaces. Color palette: neon cyan, electric blue, deep purple, metallic silver. Style: cinematic sci-fi with lens flares and holographic effects
-- For Mystery/Suspense novels: Create moody, dark atmosphere with shadows, silhouettes, rain, fog, or a solitary figure in dim light. Color palette: dark navy, charcoal, blood red accent, muted gold. Style: noir photography with high contrast
-- For Urban/Modern novels: Feature modern cityscape, business setting, or contemporary lifestyle. Color palette: warm amber, steel grey, deep burgundy, cream. Style: cinematic editorial with shallow depth of field
-- Aspect ratio should typically be 2:3 or 3:4 for book covers (vertical portrait orientation)
-- Include title text area: specify where the novel title should go and what font style (e.g., "bold calligraphic Chinese title text at top", "elegant serif title in center")
-- Ensure the composition works as a thumbnail (clear silhouette, strong contrast, readable at small size)
-- Consider platform-specific requirements: Qidian (起点) covers favor bold fantasy art; Jinjiang (晋江) covers favor elegant romance aesthetics; Fanqie (番茄) covers favor attention-grabbing, high-contrast designs
-` : "";
+    // ─── Build scenario-specific instruction block ───
+    const scenarioSpecificTips = buildScenarioTips(scenario, scenarioParams || {});
 
     const systemPrompt = `You are an expert GPT Image 2 prompt engineer. Based on the user's input, generate a detailed, high-quality prompt for GPT Image 2 image generation.
 
@@ -68,17 +56,21 @@ Application scenario: ${scenarioLabel}
 - Consider the target audience and platform for this scenario
 - Include elements that make the output suitable for this application
 
+${scenarioSpecificTips}
+
 Style-specific tips:
 - Photography: Specify film type, grain, lighting setup, camera angle, lens focal length
-- Portrait: Detail skin texture, makeup, expression, pose, clothing, background separation
-- Poster/Design: Specify layout structure, typography hierarchy, color scheme, visual weight
-- UI/Social: Describe platform, interface elements, status bar, navigation, color mode
-- Character: Include character sheet elements, expressions, outfit details, color palette
-- Food: Describe textures, steam, plating, lighting angle, background setting
-- 3D/Isometric: Specify render style, material properties, camera perspective, lighting setup
-- Infographic: Detail layout grid, data visualization type, color coding, label format
-
-${novelCoverTips}
+- Illustration: Detail art style, line work, color palette, composition, medium
+- 3D Render: Specify render engine look, material properties, camera perspective, lighting setup, reflections
+- Anime: Detail anime sub-genre, character proportions, color approach, background style
+- Sketch: Specify medium (pencil/charcoal/ink), line weight, shading technique, paper texture
+- Watercolor: Describe wash technique, color bleeding, paper grain, wet-on-wet vs dry brush
+- Pixel Art: Specify resolution, color depth, dithering technique, retro platform reference
+- Cyberpunk: Detail neon color scheme, holographic elements, rain effects, urban decay
+- Chinese Ink: Describe brush stroke style, ink density, negative space, mounting format
+- Minimalist: Specify negative space ratio, limited color count, geometric precision
+- Poster/Typography: Detail layout grid, font hierarchy, visual weight, bleed area
+- UI Design: Describe interface components, interaction states, spacing system, color tokens
 
 ${languageInstruction}
 
@@ -91,6 +83,7 @@ Respond with ONLY the generated prompt text, no explanation, no markdown formatt
 - Application Scenario: ${scenarioLabel}
 - Aspect Ratio: ${aspectRatio}
 - Quality: ${quality}
+${Object.keys(scenarioParams || {}).length > 0 ? `- Scenario Parameters: ${JSON.stringify(scenarioParams)}` : ""}
 
 Generate a detailed, professional prompt that would produce an excellent image for the specified application scenario. Be specific about every visual element.`;
 
@@ -173,4 +166,174 @@ Generate a detailed, professional prompt that would produce an excellent image f
       { status: 500 }
     );
   }
+}
+
+/**
+ * Build scenario-specific prompt engineering tips based on the scenario
+ * and its associated parameters.
+ */
+function buildScenarioTips(scenario: string, params: Record<string, string>): string {
+  const tips: string[] = [];
+
+  switch (scenario) {
+    case "novel-cover": {
+      tips.push("Novel Cover Design specific requirements:");
+      tips.push("- The cover must have a strong visual focal point that immediately conveys the genre and mood");
+      tips.push("- Leave appropriate negative space for the novel title and author name (typically top 15-25%)");
+      tips.push("- Ensure the composition works as a thumbnail (clear silhouette, strong contrast, readable at small size)");
+
+      const genre = params.novelGenre;
+      if (genre) {
+        const genreTips: Record<string, string> = {
+          "xianxia": "Xianxia/Fantasy: Epic atmospheric scenes with floating elements, divine light, mythical creatures, ancient architecture, or a lone powerful figure. Color palette: deep blues, golds, emerald greens, crimson reds. Chinese fantasy painting with dramatic volumetric lighting",
+          "romance-ancient": "Ancient Romance (古言): Elegant character portrait in historical hanfu, cherry blossoms, misty gardens, soft-focus aesthetic. Color palette: soft rose pink, warm cream, pale gold, misty jade green, lavender",
+          "romance-modern": "Modern Romance (现言): Warm intimate scene, contemporary setting, soft lighting, dreamy bokeh. Color palette: warm cream, soft caramel, gentle gold, blush pink",
+          "sci-fi": "Sci-Fi: Futuristic cityscapes, spacecraft, cyberpunk elements, holographic interfaces. Color palette: neon cyan, electric blue, deep purple, metallic silver",
+          "mystery": "Mystery/Suspense: Moody dark atmosphere, shadows, silhouettes, rain, fog, solitary figure in dim light. Color palette: dark navy, charcoal, blood red accent, muted gold",
+          "wuxia": "Wuxia: Bamboo forests, sword duels, ink wash aesthetics, martial arts action. Color palette: ink black, bamboo green-grey, rain silver, crimson accent",
+          "apocalypse": "Apocalypse/Post-apocalyptic: Ruined cityscapes, overgrown vegetation, survival gear, golden-hour dust. Color palette: warm amber dust, desaturated olive, rust orange",
+          "system-litrpg": "System/LitRPG: Holographic game panels, stat bars, level-up effects, real-world + game overlay. Color palette: neon cyan interface, golden particles, dark reality",
+          "infinite-loop": "Infinite Loop: Reality fracturing, dimension breaking, glitch effects, boundary between worlds. Color palette: vivid rift colors, black void, white data fragments",
+          "historical": "Historical/Military: Epic battle scenes, ancient warfare, mounted generals, war banners. Color palette: deep crimson, burnished gold, iron dark, amber sunset",
+          "rebirth": "Rebirth/Time-travel: Split composition, mirror/reflection, dual timelines, past vs future. Color palette: cold blue-black past vs warm golden present",
+          "light-novel": "Light Novel: Anime illustration, vibrant colors, dynamic poses, cute mascot, school+fantasy blend. Color palette: sky blue, cherry blossom pink, magical gold",
+          "supernatural": "Supernatural Horror: Eerie abandoned temples, paper dolls, red lantern glow, unsettling atmosphere. Color palette: blood red glow, yellowed paper, absolute black",
+          "farming": "Farming/Slice-of-life: Idyllic countryside, golden hour, vegetable gardens, thatched farmhouses. Color palette: warm golden green, earth brown, sunset gold",
+          "political": "Political/Power: Still-life metaphor, chess pieces, tea sets, official documents, luxury textures. Color palette: rich mahogany, red accents, gold pen, deep burgundy",
+          "esports": "Esports: Gaming setup, screen illumination, holographic game characters, arena backdrop. Color palette: dark arena, neon blue screen glow, team colors",
+          "rules-horror": "Rules Horror: Aged paper with handwritten rules, red ink, scribbled-out lines, burnt edges, minimalist dread. Color palette: near-black background, aged yellow, blood red ink",
+        };
+        if (genreTips[genre]) tips.push(`- Genre style: ${genreTips[genre]}`);
+      }
+
+      const platform = params.platform;
+      if (platform) {
+        const platformTips: Record<string, string> = {
+          "qidian": "Platform: Qidian (起点中文网) — favors bold, high-impact fantasy art with strong visual hooks. Title in bold calligraphic or impact font. Maximum readability as thumbnail",
+          "jinjiang": "Platform: Jinjiang (晋江文学城) — favors elegant, dreamy, romantic aesthetics. Title in elegant flowing serif or calligraphy. Softer, more refined atmosphere",
+          "fanqie": "Platform: Fanqie (番茄小说) — favors attention-grabbing, high-contrast designs that pop in a scrolling feed. Bold title, vivid colors, clear focal point",
+          "general": "Platform: General — balanced design suitable for multiple platforms",
+        };
+        if (platformTips[platform]) tips.push(`- ${platformTips[platform]}`);
+      }
+
+      const composition = params.composition;
+      if (composition) {
+        const compTips: Record<string, string> = {
+          "character-focus": "Composition: Character-focused — central character portrait, detailed outfit/face, background supports the character mood",
+          "scene-focus": "Composition: Scene-focused — sweeping landscape or environment, character as small element, atmosphere drives the mood",
+          "concept-design": "Composition: Concept-driven — symbolic objects, abstract visual metaphor, surreal elements that represent the story theme",
+          "typography-focus": "Composition: Typography-led — large artistic title treatment, minimal imagery, bold font as the hero element, decorative accents",
+        };
+        if (compTips[composition]) tips.push(`- ${compTips[composition]}`);
+      }
+
+      tips.push("- Aspect ratio should typically be 2:3 or 3:4 for book covers (vertical portrait orientation)");
+      break;
+    }
+
+    case "ecommerce": {
+      tips.push("E-commerce Product Photography specific requirements:");
+
+      const productType = params.productType;
+      if (productType) {
+        const ptTips: Record<string, string> = {
+          "food-drink": "Food & Drink: Emphasize appetite appeal, freshness, condensation, steam, vibrant colors. Show texture and ingredient details",
+          "beauty": "Beauty & Skincare: Focus on product texture, creaminess, translucency, luxury feel. Emphasize packaging details and premium materials",
+          "electronics": "Electronics: Highlight sleek design, screen quality, ports, material finish. Use dramatic lighting to show surface quality",
+          "clothing": "Clothing & Accessories: Show fabric drape, texture, stitching details. Emphasize fit and styling",
+          "home": "Home & Living: Show product in context, emphasize material quality, craftsmanship, and lifestyle fit",
+          "jewelry": "Jewelry: Macro-level detail, specular highlights, stone clarity, metal reflections. Use dramatic focused lighting",
+        };
+        if (ptTips[productType]) tips.push(`- ${ptTips[productType]}`);
+      }
+
+      const shootingStyle = params.shootingStyle;
+      if (shootingStyle) {
+        const ssTips: Record<string, string> = {
+          "white-bg": "White background: Clean pure white backdrop, soft even lighting, no shadows on background, product is hero",
+          "lifestyle": "Lifestyle scene: Product in real-life context, natural environment, warm ambient lighting, aspirational setting",
+          "creative": "Creative composite: Dramatic lighting, floating elements, explosive particles, dynamic composition, surreal product presentation",
+          "flat-lay": "Flat lay / Knolling: Top-down view, organized arrangement, matching accessories, consistent spacing, satisfying grid layout",
+        };
+        if (ssTips[shootingStyle]) tips.push(`- ${ssTips[shootingStyle]}`);
+      }
+
+      const background = params.background;
+      if (background) {
+        const bgTips: Record<string, string> = {
+          "solid-color": "Solid color background: Clean single-color backdrop that complements product, gradient optional",
+          "life-scene": "Life scene: Natural home/lifestyle environment, bokeh background, warm atmosphere",
+          "studio-minimal": "Studio minimal: Simple studio setup, neutral tones, minimal props, professional lighting",
+          "outdoor-natural": "Outdoor natural: Natural daylight, garden/urban setting, environmental context",
+        };
+        if (bgTips[background]) tips.push(`- ${bgTips[background]}`);
+      }
+
+      tips.push("- Product must be the clear focal point with sharp focus");
+      tips.push("- Include accurate product details (labels, textures, materials)");
+      break;
+    }
+
+    case "social-media": {
+      tips.push("Social Media Content specific requirements:");
+
+      const platform = params.platform;
+      if (platform) {
+        const pTips: Record<string, string> = {
+          "xiaohongshu": "Xiaohongshu (小红书): Aesthetic, warm tones, lifestyle feel, slightly overexposed bright look, soft colors, delicate compositions. 3:4 ratio preferred",
+          "douyin": "Douyin (抖音): Bold, eye-catching, high contrast, dynamic, works in vertical format. 9:16 ratio",
+          "weibo": "Weibo: Versatile, can be editorial or casual, supports longer text overlay. Clear subject matter",
+          "instagram": "Instagram: Clean aesthetic, curated feel, consistent color grading, aspirational quality. 1:1 or 4:5 ratio",
+          "wechat": "WeChat Moments: Personal, authentic feel, not overly edited, warm and relatable. Various ratios",
+        };
+        if (pTips[platform]) tips.push(`- ${pTips[platform]}`);
+      }
+
+      const contentType = params.contentType;
+      if (contentType) {
+        const ctTips: Record<string, string> = {
+          "selfie-portrait": "Selfie/Portrait: Flattering angle, natural skin texture, soft lighting, authentic expression",
+          "lifestyle": "Lifestyle: Everyday moment, candid feel, warm atmosphere, personal story",
+          "food-travel": "Food & Travel: Location atmosphere, local details, inviting food presentation, sense of place",
+          "ootd": "OOTD: Full outfit visible, stylish pose, interesting background, fashion-forward composition",
+          "scenery": "Scenery: Dramatic landscape, golden hour lighting, depth and scale, immersive atmosphere",
+        };
+        if (ctTips[contentType]) tips.push(`- ${ctTips[contentType]}`);
+      }
+
+      const mood = params.mood;
+      if (mood) {
+        const moodTips: Record<string, string> = {
+          "fresh-natural": "Fresh & Natural: Bright, airy, light tones, natural light, clean composition, gentle colors",
+          "retro-vintage": "Retro & Vintage: Film grain, warm tones, faded colors, nostalgic atmosphere, analog texture",
+          "trendy-cool": "Trendy & Cool: High contrast, bold colors, edgy composition, modern aesthetic, striking visuals",
+          "warm-healing": "Warm & Healing: Soft warm light, cozy atmosphere, gentle colors, comforting mood, intimate feel",
+        };
+        if (moodTips[mood]) tips.push(`- ${moodTips[mood]}`);
+      }
+      break;
+    }
+
+    case "brand-design":
+    case "advertising":
+    case "education":
+    case "game-dev":
+    case "interior-arch":
+    case "fashion-editorial":
+    case "food-beverage":
+    case "personal-art":
+    case "publishing":
+    case "film-media":
+    case "ui-ux": {
+      tips.push(`${scenarioLabel} specific requirements:`);
+      // Generic handling: include all selected params as context
+      Object.entries(params).forEach(([key, value]) => {
+        tips.push(`- ${key}: ${value}`);
+      });
+      break;
+    }
+  }
+
+  return tips.length > 0 ? tips.join("\n") : "";
 }

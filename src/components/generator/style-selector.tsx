@@ -9,7 +9,7 @@ interface StyleSelectorProps {
 
 export function StyleSelector({ selected, onSelect }: StyleSelectorProps) {
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
+    <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2">
       {STYLES.map((style) => {
         const isSelected = selected === style.id;
         return (
@@ -26,6 +26,11 @@ export function StyleSelector({ selected, onSelect }: StyleSelectorProps) {
             <span className="text-[11px] font-medium leading-tight text-center">
               {style.label.split(" ").slice(1).join(" ")}
             </span>
+            {isSelected && (
+              <span className="text-[9px] text-emerald-500/60 leading-tight text-center">
+                {style.description}
+              </span>
+            )}
           </button>
         );
       })}
