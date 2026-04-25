@@ -3,22 +3,27 @@
 import { useState, useCallback } from "react";
 import {
   Category,
+  Scenario,
   GeneratePromptRequest,
   STYLES,
   ASPECT_RATIOS,
   QUALITY_LEVELS,
   LANGUAGES,
+  SCENARIO_COLORS,
+  SCENARIO_ICONS,
 } from "@/lib/prompt-data";
 import { StyleSelector } from "./style-selector";
 import { PromptResult } from "./prompt-result";
 import { CategoryChips } from "@/components/gallery/category-chips";
+import { ScenarioChips } from "@/components/gallery/scenario-chips";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Sparkles, Loader2, ChevronDown, History } from "lucide-react";
+import { Sparkles, Loader2, ChevronDown, History, Cpu } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 interface GeneratorTabProps {
   categories: Category[];
+  scenarios: Scenario[];
 }
 
 interface HistoryItem {
@@ -26,6 +31,7 @@ interface HistoryItem {
   prompt: string;
   subject: string;
   style: string;
+  model: string;
   timestamp: number;
 }
 
@@ -51,16 +57,18 @@ function saveHistory(item: HistoryItem) {
   }
 }
 
-export function GeneratorTab({ categories }: GeneratorTabProps) {
+export function GeneratorTab({ categories, scenarios }: GeneratorTabProps) {
   const [subject, setSubject] = useState("");
   const [selectedStyle, setSelectedStyle] = useState("photography");
   const [selectedCategory, setSelectedCategory] = useState<string[]>([]);
+  const [selectedScenario, setSelectedScenario] = useState<string[]>([]);
   const [aspectRatio, setAspectRatio] = useState("1:1");
   const [quality, setQuality] = useState("high");
   const [language, setLanguage] = useState("english");
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [generating, setGenerating] = useState(false);
   const [result, setResult] = useState<string | null>(null);
+  const [usedModel, setUsedModel] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const [history, setHistory] = useState<HistoryItem[]>(() => getHistory());
   const [showHistory, setShowHistory] = useState(false);
@@ -71,12 +79,14 @@ export function GeneratorTab({ categories }: GeneratorTabProps) {
     setGenerating(true);
     setError(null);
     setResult(null);
+    setUsedModel("");
 
     try {
       const requestBody: GeneratePromptRequest = {
         subject: subject.trim(),
         style: STYLES.find((s) => s.id === selectedStyle)?.label || selectedStyle,
         category: selectedCategory.length > 0 ? selectedCategory[0] : "general",
+        scenario: selectedScenario.length > 0 ? selectedScenario[0] : "general",
         aspectRatio,
         quality,
         language,
@@ -95,12 +105,14 @@ export function GeneratorTab({ categories }: GeneratorTabProps) {
 
       const data = await response.json();
       setResult(data.prompt);
+      setUsedModel(data.model || "NVIDIA");
 
       const historyItem: HistoryItem = {
         id: Date.now().toString(),
         prompt: data.prompt,
         subject: subject.trim(),
         style: requestBody.style,
+        model: data.model || "NVIDIA",
         timestamp: Date.now(),
       };
       saveHistory(historyItem);
@@ -110,7 +122,7 @@ export function GeneratorTab({ categories }: GeneratorTabProps) {
     } finally {
       setGenerating(false);
     }
-  }, [subject, selectedStyle, selectedCategory, aspectRatio, quality, language]);
+  }, [subject, selectedStyle, selectedCategory, selectedScenario, aspectRatio, quality, language]);
 
   const handleCategoryToggle = useCallback((categoryId: string) => {
     setSelectedCategory((prev) =>
@@ -118,8 +130,21 @@ export function GeneratorTab({ categories }: GeneratorTabProps) {
     );
   }, []);
 
+  const handleScenarioToggle = useCallback((scenarioId: string) => {
+    setSelectedScenario((prev) =>
+      prev.includes(scenarioId) ? prev.filter((s) => s !== scenarioId) : [scenarioId]
+    );
+  }, []);
+
   return (
     <div className="space-y-6">
+      {/* NVIDIA AI Badge */}
+      <div className="flex items-center gap-2 p-3 bg-gradient-to-r from-green-500/10 via-emerald-500/5 to-teal-500/10 border border-emerald-500/20 rounded-lg">
+        <Cpu className="size-4 text-emerald-400" />
+        <span className="text-xs text-emerald-400 font-medium">AI 由 NVIDIA 加速驱动</span>
+        <span className="text-[10px] text-slate-500">· Llama 3.1 Nemotron 70B</span>
+      </div>
+
       {/* Subject Input */}
       <div className="space-y-2">
         <label className="text-sm font-medium text-slate-300">
@@ -137,6 +162,17 @@ export function GeneratorTab({ categories }: GeneratorTabProps) {
       <div className="space-y-2">
         <label className="text-sm font-medium text-slate-300">选择风格</label>
         <StyleSelector selected={selectedStyle} onSelect={setSelectedStyle} />
+      </div>
+
+      {/* Scenario Selection */}
+      <div className="space-y-2">
+        <label className="text-sm font-medium text-slate-300">选择应用场景</label>
+        <ScenarioChips
+          scenarios={scenarios}
+          selected={selectedScenario}
+          onToggle={handleScenarioToggle}
+          onClear={() => setSelectedScenario([])}
+        />
       </div>
 
       {/* Category Selection */}
@@ -263,7 +299,17 @@ export function GeneratorTab({ categories }: GeneratorTabProps) {
       )}
 
       {/* Result */}
-      {result && <PromptResult prompt={result} onRegenerate={handleGenerate} />}
+      {result && (
+        <div className="space-y-2">
+          <PromptResult prompt={result} onRegenerate={handleGenerate} />
+          {usedModel && (
+            <div className="flex items-center gap-1.5 text-[10px] text-slate-500">
+              <Cpu className="size-3" />
+              <span>模型：{usedModel}</span>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* History */}
       <div className="space-y-2">
@@ -293,12 +339,21 @@ export function GeneratorTab({ categories }: GeneratorTabProps) {
                   <span className="text-xs text-slate-500">
                     {new Date(item.timestamp).toLocaleString()}
                   </span>
-                  <Badge
-                    variant="outline"
-                    className="text-[10px] bg-slate-700/50 text-slate-400 border-slate-600/50"
-                  >
-                    {item.style}
-                  </Badge>
+                  <div className="flex gap-1.5">
+                    <Badge
+                      variant="outline"
+                      className="text-[10px] bg-green-500/10 text-green-400 border-green-500/30"
+                    >
+                      <Cpu className="size-2.5 mr-0.5" />
+                      {item.model}
+                    </Badge>
+                    <Badge
+                      variant="outline"
+                      className="text-[10px] bg-slate-700/50 text-slate-400 border-slate-600/50"
+                    >
+                      {item.style}
+                    </Badge>
+                  </div>
                 </div>
                 <p className="text-xs text-slate-400 line-clamp-2 group-hover:text-slate-300 transition-colors">
                   {item.prompt}

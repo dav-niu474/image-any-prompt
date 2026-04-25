@@ -1,0 +1,69 @@
+{
+  "scenarios": [
+    {
+      "id": "ecommerce",
+      "label": "🛒 电商产品",
+      "labelEn": "E-commerce"
+    },
+    {
+      "id": "social-media",
+      "label": "📱 社交媒体",
+      "labelEn": "Social Media"
+    },
+    {
+      "id": "brand-design",
+      "label": "🎨 品牌设计",
+      "labelEn": "Brand Design"
+    },
+    {
+      "id": "advertising",
+      "label": "📢 广告营销",
+      "labelEn": "Advertising"
+    },
+    {
+      "id": "education",
+      "label": "📚 教育科普",
+      "labelEn": "Education"
+    },
+    {
+      "id": "game-dev",
+      "label": "🎮 游戏开发",
+      "labelEn": "Game Dev"
+    },
+    {
+      "id": "interior-arch",
+      "label": "🏠 室内建筑",
+      "labelEn": "Interior & Architecture"
+    },
+    {
+      "id": "fashion-editorial",
+      "label": "👗 时尚编辑",
+      "labelEn": "Fashion Editorial"
+    },
+    {
+      "id": "food-beverage",
+      "label": "🍜 美食餐饮",
+      "labelEn": "Food & Beverage"
+    },
+    {
+      "id": "personal-art",
+      "label": "🎭 个人创作",
+      "labelEn": "Personal Art"
+    },
+    {
+      "id": "publishing",
+      "label": "📰 出版印刷",
+      "labelEn": "Publishing"
+    },
+    {
+      "id": "film-media",
+      "label": "🎬 影视媒体",
+      "labelEn": "Film & Media"
+    },
+    {
+      "id": "ui-ux",
+      "label": "💻 界面设计",
+      "labelEn": "UI/UX Design"
+    }
+  ]
+}

@@ -2,6 +2,7 @@ export interface Prompt {
   id: string;
   title: string;
   category: string;
+  scenario: string;
   tags: string[];
   prompt: string;
   source: string;
@@ -14,8 +15,18 @@ export interface Category {
   labelEn: string;
 }
 
+export interface Scenario {
+  id: string;
+  label: string;
+  labelEn: string;
+}
+
 export interface CategoriesData {
   categories: Category[];
+}
+
+export interface ScenariosData {
+  scenarios: Scenario[];
 }
 
 export const SOURCE_LABELS: Record<string, string> = {
@@ -91,6 +102,38 @@ export const CATEGORY_ICONS: Record<string, string> = {
   interior: "🏠",
 };
 
+export const SCENARIO_COLORS: Record<string, string> = {
+  ecommerce: "bg-orange-500/20 text-orange-400 border-orange-500/30",
+  "social-media": "bg-pink-500/20 text-pink-400 border-pink-500/30",
+  "brand-design": "bg-violet-500/20 text-violet-400 border-violet-500/30",
+  advertising: "bg-rose-500/20 text-rose-400 border-rose-500/30",
+  education: "bg-blue-500/20 text-blue-400 border-blue-500/30",
+  "game-dev": "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
+  "interior-arch": "bg-amber-500/20 text-amber-400 border-amber-500/30",
+  "fashion-editorial": "bg-fuchsia-500/20 text-fuchsia-400 border-fuchsia-500/30",
+  "food-beverage": "bg-yellow-500/20 text-yellow-400 border-yellow-500/30",
+  "personal-art": "bg-teal-500/20 text-teal-400 border-teal-500/30",
+  publishing: "bg-cyan-500/20 text-cyan-400 border-cyan-500/30",
+  "film-media": "bg-purple-500/20 text-purple-400 border-purple-500/30",
+  "ui-ux": "bg-sky-500/20 text-sky-400 border-sky-500/30",
+};
+
+export const SCENARIO_ICONS: Record<string, string> = {
+  ecommerce: "🛒",
+  "social-media": "📱",
+  "brand-design": "🎨",
+  advertising: "📢",
+  education: "📚",
+  "game-dev": "🎮",
+  "interior-arch": "🏠",
+  "fashion-editorial": "👗",
+  "food-beverage": "🍜",
+  "personal-art": "🎭",
+  publishing: "📰",
+  "film-media": "🎬",
+  "ui-ux": "💻",
+};
+
 export const SOURCE_COLORS: Record<string, string> = {
   "opennana-nano": "bg-teal-500/20 text-teal-400 border-teal-500/30",
   "opennana-gpt": "bg-purple-500/20 text-purple-400 border-purple-500/30",
@@ -107,7 +150,8 @@ export function filterPrompts(
   prompts: Prompt[],
   searchQuery: string,
   selectedCategories: string[],
-  selectedSources: string[]
+  selectedSources: string[],
+  selectedScenarios: string[] = []
 ): Prompt[] {
   let filtered = prompts;
 
@@ -129,6 +173,10 @@ export function filterPrompts(
     filtered = filtered.filter((p) => selectedSources.includes(p.source));
   }
 
+  if (selectedScenarios.length > 0) {
+    filtered = filtered.filter((p) => selectedScenarios.includes(p.scenario));
+  }
+
   return filtered;
 }
 
@@ -136,6 +184,7 @@ export interface GeneratePromptRequest {
   subject: string;
   style: string;
   category: string;
+  scenario: string;
   aspectRatio: string;
   quality: string;
   language: string;
@@ -143,6 +192,7 @@ export interface GeneratePromptRequest {
 
 export interface GeneratePromptResponse {
   prompt: string;
+  model?: string;
 }
 
 export const STYLES = [

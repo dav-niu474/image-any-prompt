@@ -1,34 +1,38 @@
 "use client";
 
 import { useState, useMemo, useCallback } from "react";
-import { Prompt, Category, CategoriesData, SOURCE_LABELS, filterPrompts } from "@/lib/prompt-data";
+import { Prompt, Category, Scenario, CategoriesData, ScenariosData, SOURCE_LABELS, SCENARIO_COLORS, SCENARIO_ICONS, filterPrompts } from "@/lib/prompt-data";
 import { SearchBar } from "./search-bar";
 import { CategoryChips } from "./category-chips";
+import { ScenarioChips } from "./scenario-chips";
 import { PromptCard } from "./prompt-card";
 import { PromptDetailDialog } from "./prompt-detail-dialog";
 import { Badge } from "@/components/ui/badge";
-import { Filter, Grid3X3, LayoutGrid } from "lucide-react";
+import { Filter, Grid3X3, LayoutGrid, Layers } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface GalleryTabProps {
   prompts: Prompt[];
   categories: Category[];
+  scenarios: Scenario[];
 }
 
 const ALL_SOURCES = Object.keys(SOURCE_LABELS);
 
-export function GalleryTab({ prompts, categories }: GalleryTabProps) {
+export function GalleryTab({ prompts, categories, scenarios }: GalleryTabProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedSources, setSelectedSources] = useState<string[]>([]);
+  const [selectedScenarios, setSelectedScenarios] = useState<string[]>([]);
   const [selectedPrompt, setSelectedPrompt] = useState<Prompt | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [showSourceFilter, setShowSourceFilter] = useState(false);
+  const [showScenarioFilter, setShowScenarioFilter] = useState(false);
   const [compactView, setCompactView] = useState(false);
 
   const filteredPrompts = useMemo(
-    () => filterPrompts(prompts, searchQuery, selectedCategories, selectedSources),
-    [prompts, searchQuery, selectedCategories, selectedSources]
+    () => filterPrompts(prompts, searchQuery, selectedCategories, selectedSources, selectedScenarios),
+    [prompts, searchQuery, selectedCategories, selectedSources, selectedScenarios]
   );
 
   const handleToggleCategory = useCallback((categoryId: string) => {
@@ -51,6 +55,18 @@ export function GalleryTab({ prompts, categories }: GalleryTabProps) {
     );
   }, []);
 
+  const handleToggleScenario = useCallback((scenarioId: string) => {
+    setSelectedScenarios((prev) =>
+      prev.includes(scenarioId)
+        ? prev.filter((s) => s !== scenarioId)
+        : [...prev, scenarioId]
+    );
+  }, []);
+
+  const handleClearScenarios = useCallback(() => {
+    setSelectedScenarios([]);
+  }, []);
+
   const handleCardClick = useCallback((prompt: Prompt) => {
     setSelectedPrompt(prompt);
     setDialogOpen(true);
@@ -66,6 +82,19 @@ export function GalleryTab({ prompts, categories }: GalleryTabProps) {
       <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
         <SearchBar value={searchQuery} onChange={setSearchQuery} />
         <div className="flex gap-2 items-center shrink-0">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setShowScenarioFilter(!showScenarioFilter)}
+            className={`h-9 gap-1.5 text-xs ${
+              selectedScenarios.length > 0
+                ? "border-emerald-500/50 text-emerald-400 bg-emerald-500/10"
+                : "border-slate-700 text-slate-400 bg-slate-800/50 hover:border-slate-600 hover:text-slate-300"
+            }`}
+          >
+            <Layers className="size-3.5" />
+            应用场景 {selectedScenarios.length > 0 && `(${selectedScenarios.length})`}
+          </Button>
           <Button
             variant="outline"
             size="sm"
@@ -94,9 +123,43 @@ export function GalleryTab({ prompts, categories }: GalleryTabProps) {
         </div>
       </div>
 
+      {/* Scenario filter */}
+      {showScenarioFilter && (
+        <div className="flex flex-wrap gap-2 p-3 bg-slate-800/30 rounded-lg border border-slate-700/30">
+          <span className="text-xs text-slate-500 w-full mb-1">按应用场景筛选</span>
+          {scenarios.map((scenario) => {
+            const isSelected = selectedScenarios.includes(scenario.id);
+            const colorClasses = SCENARIO_COLORS[scenario.id] || "bg-slate-500/20 text-slate-400 border-slate-500/30";
+            return (
+              <button key={scenario.id} onClick={() => handleToggleScenario(scenario.id)}>
+                <Badge
+                  variant="outline"
+                  className={`cursor-pointer transition-all text-xs px-2.5 py-1 ${
+                    isSelected
+                      ? colorClasses + " ring-1 ring-current/30"
+                      : "bg-slate-800/50 text-slate-400 border-slate-700 hover:border-slate-500 hover:text-slate-300"
+                  }`}
+                >
+                  {scenario.label}
+                </Badge>
+              </button>
+            );
+          })}
+          {selectedScenarios.length > 0 && (
+            <button
+              onClick={() => setSelectedScenarios([])}
+              className="text-xs text-slate-500 hover:text-slate-300 transition-colors ml-1"
+            >
+              清除
+            </button>
+          )}
+        </div>
+      )}
+
       {/* Source filter */}
       {showSourceFilter && (
         <div className="flex flex-wrap gap-2 p-3 bg-slate-800/30 rounded-lg border border-slate-700/30">
+          <span className="text-xs text-slate-500 w-full mb-1">按数据来源筛选</span>
           {ALL_SOURCES.map((source) => {
             const isSelected = selectedSources.includes(source);
             return (
@@ -138,11 +201,12 @@ export function GalleryTab({ prompts, categories }: GalleryTabProps) {
         <span>
           显示 {filteredPrompts.length} / {prompts.length} 条提示词
         </span>
-        {(selectedCategories.length > 0 || selectedSources.length > 0 || searchQuery) && (
+        {(selectedCategories.length > 0 || selectedSources.length > 0 || selectedScenarios.length > 0 || searchQuery) && (
           <button
             onClick={() => {
               setSelectedCategories([]);
               setSelectedSources([]);
+              setSelectedScenarios([]);
               setSearchQuery("");
             }}
             className="text-emerald-500 hover:text-emerald-400 transition-colors"
@@ -171,6 +235,7 @@ export function GalleryTab({ prompts, categories }: GalleryTabProps) {
             <PromptCard
               key={prompt.id}
               prompt={prompt}
+              scenarios={scenarios}
               onClick={() => handleCardClick(prompt)}
             />
           ))}
@@ -183,6 +248,7 @@ export function GalleryTab({ prompts, categories }: GalleryTabProps) {
         open={dialogOpen}
         onOpenChange={setDialogOpen}
         categories={categories}
+        scenarios={scenarios}
         allPrompts={prompts}
         onNavigate={handleNavigate}
       />

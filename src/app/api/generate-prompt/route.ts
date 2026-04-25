@@ -1,8 +1,6 @@
-import ZAI from "z-ai-web-dev-sdk";
-
 export async function POST(request: Request) {
   try {
-    const { subject, style, category, aspectRatio, quality, language } =
+    const { subject, style, category, scenario, aspectRatio, quality, language } =
       await request.json();
 
     if (!subject || !subject.trim()) {
@@ -12,14 +10,28 @@ export async function POST(request: Request) {
       );
     }
 
-    const zai = await ZAI.create();
-
     const languageInstruction =
       language === "chinese"
         ? "Write the prompt in Chinese (中文)."
         : language === "japanese"
           ? "Write the prompt in Japanese (日本語)."
           : "Write the prompt in English.";
+
+    const scenarioLabel = {
+      "ecommerce": "E-commerce Product Photography",
+      "social-media": "Social Media Content",
+      "brand-design": "Brand Identity & Design",
+      "advertising": "Advertising & Marketing",
+      "education": "Educational & Infographic",
+      "game-dev": "Game Development Assets",
+      "interior-arch": "Interior & Architecture",
+      "fashion-editorial": "Fashion Editorial",
+      "food-beverage": "Food & Beverage Photography",
+      "personal-art": "Personal Creative Art",
+      "publishing": "Publishing & Editorial",
+      "film-media": "Film & Media Production",
+      "ui-ux": "UI/UX Design",
+    }[scenario] || scenario;
 
     const systemPrompt = `You are an expert GPT Image 2 prompt engineer. Based on the user's input, generate a detailed, high-quality prompt for GPT Image 2 image generation.
 
@@ -34,6 +46,11 @@ Key principles for great GPT Image 2 prompts:
 - Include negative constraints when needed (e.g., "avoid messy clutter", "no watermark", "no blurry textures")
 - Use professional terminology (e.g., "knolling composition", "orthographic view", "tilt-shift effect")
 - Describe color palettes precisely (e.g., "Forest Green dominant, Matte White, Kraft Paper Brown")
+
+Application scenario: ${scenarioLabel}
+- Tailor the prompt specifically for this use case
+- Consider the target audience and platform for this scenario
+- Include elements that make the output suitable for this application
 
 Style-specific tips:
 - Photography: Specify film type, grain, lighting setup, camera angle, lens focal length
@@ -53,10 +70,58 @@ Respond with ONLY the generated prompt text, no explanation, no markdown formatt
 - Subject: ${subject}
 - Style: ${style}
 - Category: ${category}
+- Application Scenario: ${scenarioLabel}
 - Aspect Ratio: ${aspectRatio}
 - Quality: ${quality}
 
-Generate a detailed, professional prompt that would produce an excellent image. Be specific about every visual element.`;
+Generate a detailed, professional prompt that would produce an excellent image for the specified application scenario. Be specific about every visual element.`;
+
+    // Use NVIDIA API
+    const nvidiaApiKey = process.env.NVIDIA_API_KEY;
+    const modelName = "nvidia/llama-3.1-nemotron-70b-instruct";
+
+    if (nvidiaApiKey) {
+      try {
+        const nvidiaResponse = await fetch("https://integrate.api.nvidia.com/v1/chat/completions", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${nvidiaApiKey}`,
+          },
+          body: JSON.stringify({
+            model: modelName,
+            messages: [
+              { role: "system", content: systemPrompt },
+              { role: "user", content: userPrompt },
+            ],
+            max_tokens: 1500,
+            temperature: 0.8,
+            top_p: 0.9,
+          }),
+        });
+
+        if (nvidiaResponse.ok) {
+          const data = await nvidiaResponse.json();
+          const generatedPrompt = data.choices?.[0]?.message?.content;
+
+          if (generatedPrompt) {
+            return Response.json({
+              prompt: generatedPrompt.trim(),
+              model: "NVIDIA Llama 3.1 Nemotron 70B"
+            });
+          }
+        }
+
+        // If NVIDIA fails, fall through to fallback
+        console.warn("NVIDIA API failed, using fallback");
+      } catch (nvidiaError) {
+        console.warn("NVIDIA API error, using fallback:", nvidiaError);
+      }
+    }
+
+    // Fallback: Use z-ai-web-dev-sdk
+    const ZAI = (await import("z-ai-web-dev-sdk")).default;
+    const zai = await ZAI.create();
 
     const result = await zai.chat.completions.create({
       model: "gpt-4o-mini",
@@ -70,7 +135,10 @@ Generate a detailed, professional prompt that would produce an excellent image. 
 
     const generatedPrompt = result.choices[0].message.content;
 
-    return Response.json({ prompt: generatedPrompt });
+    return Response.json({
+      prompt: generatedPrompt,
+      model: "GPT-4o Mini (Fallback)"
+    });
   } catch (error) {
     console.error("Error generating prompt:", error);
     return Response.json(

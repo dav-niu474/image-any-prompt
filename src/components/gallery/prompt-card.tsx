@@ -1,10 +1,11 @@
 "use client";
 
-import { Prompt, CATEGORY_COLORS, CATEGORY_DOT_COLORS, SOURCE_LABELS, SOURCE_COLORS, truncateText } from "@/lib/prompt-data";
+import { Prompt, Scenario, CATEGORY_COLORS, CATEGORY_DOT_COLORS, CATEGORY_ICONS, SOURCE_LABELS, SOURCE_COLORS, SCENARIO_COLORS, SCENARIO_ICONS, truncateText } from "@/lib/prompt-data";
 import { Badge } from "@/components/ui/badge";
 
 interface PromptCardProps {
   prompt: Prompt;
+  scenarios: Scenario[];
   onClick: () => void;
 }
 
@@ -30,7 +31,7 @@ const CATEGORY_GRADIENTS: Record<string, string> = {
   interior: "from-amber-500/10 to-yellow-500/5",
 };
 
-const CATEGORY_ICONS: Record<string, string> = {
+const LOCAL_CATEGORY_ICONS: Record<string, string> = {
   photography: "📷",
   portrait: "👤",
   poster: "📰",
@@ -52,13 +53,16 @@ const CATEGORY_ICONS: Record<string, string> = {
   interior: "🏠",
 };
 
-export function PromptCard({ prompt, onClick }: PromptCardProps) {
+export function PromptCard({ prompt, scenarios, onClick }: PromptCardProps) {
   const dotColor = CATEGORY_DOT_COLORS[prompt.category] || "bg-slate-400";
   const sourceColor = SOURCE_COLORS[prompt.source] || "bg-slate-500/20 text-slate-400 border-slate-500/30";
   const sourceLabel = SOURCE_LABELS[prompt.source] || prompt.source;
   const gradient = CATEGORY_GRADIENTS[prompt.category] || "from-slate-500/10 to-slate-500/5";
   const categoryColor = CATEGORY_COLORS[prompt.category] || "bg-slate-500/20 text-slate-400 border-slate-500/30";
-  const categoryIcon = CATEGORY_ICONS[prompt.category] || "🎨";
+  const categoryIcon = LOCAL_CATEGORY_ICONS[prompt.category] || "🎨";
+  const scenarioColor = SCENARIO_COLORS[prompt.scenario] || "bg-slate-500/20 text-slate-400 border-slate-500/30";
+  const scenarioIcon = SCENARIO_ICONS[prompt.scenario] || "🎨";
+  const scenarioLabel = scenarios.find(s => s.id === prompt.scenario)?.label || prompt.scenario;
 
   return (
     <button
@@ -82,15 +86,21 @@ export function PromptCard({ prompt, onClick }: PromptCardProps) {
           {truncateText(prompt.prompt, 120)}
         </p>
         
-        {/* Tags and source */}
+        {/* Tags, scenario and source */}
         <div className="flex flex-wrap gap-1.5 pl-7">
+          <Badge
+            variant="outline"
+            className={`text-[10px] px-1.5 py-0 ${scenarioColor}`}
+          >
+            {scenarioIcon} {scenarioLabel}
+          </Badge>
           <Badge
             variant="outline"
             className={`text-[10px] px-1.5 py-0 ${categoryColor}`}
           >
             {prompt.category}
           </Badge>
-          {prompt.tags.filter(t => t !== prompt.category).slice(0, 2).map((tag) => (
+          {prompt.tags.filter(t => t !== prompt.category).slice(0, 1).map((tag) => (
             <Badge
               key={tag}
               variant="outline"

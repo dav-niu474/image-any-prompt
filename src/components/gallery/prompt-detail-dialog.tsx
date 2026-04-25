@@ -4,11 +4,14 @@ import { useState } from "react";
 import {
   Prompt,
   Category,
+  Scenario,
   CATEGORY_COLORS,
   CATEGORY_DOT_COLORS,
   CATEGORY_ICONS,
   SOURCE_LABELS,
   SOURCE_COLORS,
+  SCENARIO_COLORS,
+  SCENARIO_ICONS,
   truncateText,
 } from "@/lib/prompt-data";
 import {
@@ -28,6 +31,7 @@ interface PromptDetailDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   categories: Category[];
+  scenarios: Scenario[];
   allPrompts: Prompt[];
   onNavigate: (prompt: Prompt) => void;
 }
@@ -37,6 +41,7 @@ export function PromptDetailDialog({
   open,
   onOpenChange,
   categories,
+  scenarios,
   allPrompts,
   onNavigate,
 }: PromptDetailDialogProps) {
@@ -52,9 +57,12 @@ export function PromptDetailDialog({
   const categoryLabel =
     categories.find((c) => c.id === prompt.category)?.label || prompt.category;
   const categoryIcon = CATEGORY_ICONS[prompt.category] || "🎨";
+  const scenarioColor = SCENARIO_COLORS[prompt.scenario] || "bg-slate-500/20 text-slate-400 border-slate-500/30";
+  const scenarioIcon = SCENARIO_ICONS[prompt.scenario] || "🎨";
+  const scenarioLabel = scenarios.find(s => s.id === prompt.scenario)?.label || prompt.scenario;
 
   const relatedPrompts = allPrompts
-    .filter((p) => p.category === prompt.category && p.id !== prompt.id)
+    .filter((p) => p.scenario === prompt.scenario && p.id !== prompt.id)
     .slice(0, 5);
 
   const handleCopy = async () => {
@@ -80,6 +88,9 @@ export function PromptDetailDialog({
         <DialogHeader>
           <div className="flex items-center gap-2 mb-1.5">
             <span className="text-base">{categoryIcon}</span>
+            <Badge variant="outline" className={`text-xs ${scenarioColor}`}>
+              {scenarioIcon} {scenarioLabel}
+            </Badge>
             <Badge variant="outline" className={`text-xs ${categoryColor}`}>
               {categoryLabel}
             </Badge>
@@ -149,15 +160,19 @@ export function PromptDetailDialog({
               </span>
               <span className="text-slate-700">·</span>
               <span className="text-xs text-slate-400">
+                应用场景：<span className="text-slate-300">{scenarioLabel}</span>
+              </span>
+              <span className="text-slate-700">·</span>
+              <span className="text-xs text-slate-400">
                 ID：<span className="text-slate-500 font-mono">{prompt.id}</span>
               </span>
             </div>
 
-            {/* Related prompts */}
+            {/* Related prompts by scenario */}
             {relatedPrompts.length > 0 && (
               <div className="space-y-2">
                 <span className="text-xs font-medium text-slate-500 uppercase tracking-wider">
-                  同类提示词
+                  同场景提示词
                 </span>
                 <div className="space-y-1.5">
                   {relatedPrompts.map((rp) => (

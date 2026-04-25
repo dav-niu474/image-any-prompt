@@ -1,36 +1,40 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Prompt, Category, CategoriesData } from "@/lib/prompt-data";
+import { Prompt, Category, Scenario, CategoriesData, ScenariosData } from "@/lib/prompt-data";
 import { GalleryTab } from "@/components/gallery/gallery-tab";
 import { GeneratorTab } from "@/components/generator/generator-tab";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Sparkles, ImageIcon, Loader2, ExternalLink, Github, Heart } from "lucide-react";
+import { Sparkles, ImageIcon, Loader2, ExternalLink, Github, Heart, Cpu } from "lucide-react";
 import Image from "next/image";
 
 export default function Home() {
   const [prompts, setPrompts] = useState<Prompt[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
+  const [scenarios, setScenarios] = useState<Scenario[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function loadData() {
       try {
-        const [promptsRes, categoriesRes] = await Promise.all([
+        const [promptsRes, categoriesRes, scenariosRes] = await Promise.all([
           fetch("/data/prompts.json"),
           fetch("/data/categories.json"),
+          fetch("/data/scenarios.json"),
         ]);
 
-        if (!promptsRes.ok || !categoriesRes.ok) {
+        if (!promptsRes.ok || !categoriesRes.ok || !scenariosRes.ok) {
           throw new Error("Failed to load data");
         }
 
         const promptsData: Prompt[] = await promptsRes.json();
         const categoriesData: CategoriesData = await categoriesRes.json();
+        const scenariosData: ScenariosData = await scenariosRes.json();
 
         setPrompts(promptsData);
         setCategories(categoriesData.categories);
+        setScenarios(scenariosData.scenarios);
       } catch (err) {
         setError(err instanceof Error ? err.message : "加载数据失败");
       } finally {
@@ -73,7 +77,7 @@ export default function Home() {
                   </span>
                 </h1>
                 <p className="text-sm text-slate-400 mt-1">
-                  精选 {prompts.length > 0 ? prompts.length : "160+"} 条高质量提示词 · 涵盖 {categories.length > 0 ? categories.length : "19"} 个类别 · 支持 AI 智能生成
+                  精选 {prompts.length > 0 ? prompts.length : "160+"} 条高质量提示词 · 涵盖 {categories.length > 0 ? categories.length : "19"} 个类别 · {scenarios.length > 0 ? scenarios.length : "13"} 种应用场景 · NVIDIA AI 驱动
                 </p>
               </div>
             </div>
@@ -114,12 +118,13 @@ export default function Home() {
           </div>
 
           {/* Feature highlights */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6">
+          <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 mt-6">
             {[
               { label: "提示词数量", value: prompts.length || "160+", icon: "📝" },
               { label: "内容类别", value: categories.length || "19", icon: "🏷️" },
+              { label: "应用场景", value: scenarios.length || "13", icon: "🎯" },
               { label: "数据来源", value: "4+", icon: "📚" },
-              { label: "AI 生成", value: "支持", icon: "✨" },
+              { label: "AI 引擎", value: "NVIDIA", icon: "⚡" },
             ].map((stat) => (
               <div
                 key={stat.label}
@@ -174,11 +179,11 @@ export default function Home() {
             </TabsList>
 
             <TabsContent value="gallery" className="mt-0">
-              <GalleryTab prompts={prompts} categories={categories} />
+              <GalleryTab prompts={prompts} categories={categories} scenarios={scenarios} />
             </TabsContent>
 
             <TabsContent value="generator" className="mt-0">
-              <GeneratorTab categories={categories} />
+              <GeneratorTab categories={categories} scenarios={scenarios} />
             </TabsContent>
           </Tabs>
         )}
@@ -191,7 +196,7 @@ export default function Home() {
             <div className="flex items-center gap-2 text-xs text-slate-500">
               <span>GPT Image 2 提示词精华库</span>
               <span className="text-slate-700">·</span>
-              <span>共 {prompts.length} 条提示词 · {categories.length} 个类别</span>
+              <span>共 {prompts.length} 条提示词 · {categories.length} 个类别 · {scenarios.length} 种场景</span>
             </div>
             <div className="flex items-center gap-4 text-xs text-slate-600">
               <span className="flex items-center gap-1">
@@ -203,7 +208,10 @@ export default function Home() {
                 <a href="https://github.com/YouMind-OpenLab/awesome-gpt-image-2" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-400 transition-colors">YouMind</a>
               </span>
               <span className="flex items-center gap-1 text-slate-500">
-                Made with <Heart className="size-3 text-rose-500 fill-rose-500" /> AI
+                AI Powered by <Cpu className="size-3 text-green-400" /> NVIDIA
+              </span>
+              <span className="flex items-center gap-1 text-slate-500">
+                Made with <Heart className="size-3 text-rose-500 fill-rose-500" />
               </span>
             </div>
           </div>
